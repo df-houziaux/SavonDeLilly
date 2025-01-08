@@ -1,0 +1,113 @@
+﻿@model IEnumerable<SavonDeLilly.Models.Product> 
+@{
+    ViewBag.Title = "Produits de la Catégorie";
+
+
+
+    // Choix de la classe de fond basée sur la catégorie
+
+    string backgroundClass = ViewBag.Category switch
+
+    {
+
+        "category1" => "background-category1",
+
+        "category2" => "background-category2",
+
+        "category3" => "background-category3",
+
+        _ => ""
+
+    };
+}
+
+<div style="text-align: center;">
+    <h1 class="category-title">Produits de la Catégorie</h1>
+</div>
+
+<div class="header">
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Rechercher un produit..." />
+        <select id="searchFilter" class="search-filter">
+            <option value="name">Nom</option>
+            <option value="ingredient">Ingrédient</option>
+            <option value="price-asc">Prix - Moins Cher au Plus Cher</option>
+            <option value="price-desc">Prix - Plus Cher au Moins Cher</option>
+        </select>
+        <a href="javascript:void(0);" id="cartIconLink">
+            <div class="cart-icon">
+                <img src="~/images/panier.png" alt="Panier" />
+                <span id="cartCount" class="cart-count">0</span>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="product-list-grid @backgroundClass" id="product-container">
+    @foreach (var product in Model)
+
+    {
+        <div class="flip-card"
+             data-name="@product.Name"
+             data-price="@product.Price"
+             data-ingredient="@product.Ingredients"
+             data-stock="@product.Stock">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <div class="card">
+                        <img src="@product.ImageUrl" alt="@product.Name" class="card-img-top" />
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            <p class="card-price">@product.Price €</p>
+                            <p class="card-stock">
+                                @if (product.Stock <= 0)
+
+                                {
+                                    <span style="color: red;">Épuisé</span>
+                                }
+
+                                else
+
+                                {
+                                    <span style="color: green;">Stock restant: @product.Stock</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card-back">
+                    <h2>@product.Name</h2>
+                    <p>Ingrédients :</p>
+                    <p>@product.Ingredients</p>
+                </div>
+            </div>
+            <div class="cart-buttons">
+                <button class="add-to-cart-btn"
+                        data-product-name="@product.Name"
+                        data-product-price="@product.Price"
+                        data-product-stock="@product.Stock"
+                @(product.Stock <= 0 ? "disabled" : "")>
+                    Ajouter au panier
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+
+<!-- Conteneur des détails du panier -->
+<div class="cart-details-container" id="cartDetailsContainer">
+    <button class="close-cart-btn" id="closeCartBtn">&times;</button>
+    <h3>Détails du Panier</h3>
+    <ul id="cartItemsList"></ul>
+    <div id="cartTotalContainer">
+        <span>Total : </span><span id="cartTotal">0.00 €</span>
+    </div>
+    <button id="clearCartBtn" class="clear-cart-btn">Vider le Panier</button>
+    <button id="validateOrderBtn" class="cart-action-btn">Valider la commande</button>
+</div>
+
+<link rel="stylesheet" href="~/css/styles.css" />
+
+<script src="~/js/Products.js"></script>

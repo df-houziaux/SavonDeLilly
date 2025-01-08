@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SavonDeLilly.Models.Product> 
+@{
+    ViewData["Title"] = "Catalogue de Bougies";
+}
+
+<h1>Catalogue de Bougies</h1>
+
+<div>
+    <button onclick="location.href='@Url.Action("Category1")'">Lavande</button>
+    <button onclick="location.href='@Url.Action("Category2")'">Vanille</button>
+    <button onclick="location.href='@Url.Action("Category3")'">Rosée</button>
+</div>
+
+<div class="product-list-grid">
+    @foreach (var product in Model)
+    {
+        <div class="product-item">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <!-- Face avant : image, nom, description, prix -->
+                    <div class="flip-card-front">
+                        <img src="~@product.ImageUrl" alt="@product.Name" />
+                        <h2>@product.Name</h2>
+                        <p>@product.Description</p>
+                        <p>Prix : @product.Price €</p>
+                    </div>
+                    <!-- Face arrière : ingrédients -->
+                    <div class="flip-card-back">
+                        <h2>@product.Name</h2>
+                        <p>Ingrédients :</p>
+                        <p>@product.Ingredients</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    }
+</div>
+
+<!-- Lien vers le fichier CSS -->
+<link rel="stylesheet" href="~/css/styles.css" />

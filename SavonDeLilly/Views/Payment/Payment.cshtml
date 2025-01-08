@@ -1,0 +1,58 @@
+﻿@model List<SavonDeLilly.Models.CartItem>
+<h2>Paiement</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <p>Votre panier est vide.</p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Prix</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Product.Price €</td>
+                    <td>@(item.Quantity * item.Product.Price) €</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3>Total : @ViewBag.CartTotal €</h3>
+
+    <form asp-action="ProcessPayment" method="post">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="error-messages">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p style="color:red;">@error.ErrorMessage</p>
+                }
+            </div>
+        }
+        <div>
+            <label for="CardNumber">Numéro de carte :</label>
+            <input type="text" id="CardNumber" name="CardNumber" required />
+        </div>
+        <div>
+            <label for="ExpiryDate">Date d'expiration :</label>
+            <input type="text" id="ExpiryDate" name="ExpiryDate" placeholder="MM/AA" required />
+        </div>
+        <div>
+            <label for="CVV">CVV :</label>
+            <input type="text" id="CVV" name="CVV" required />
+        </div>
+        <button type="submit">Valider le paiement</button>
+    </form>
+}

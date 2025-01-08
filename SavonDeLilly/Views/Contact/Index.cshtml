@@ -1,0 +1,66 @@
+﻿@model SavonDeLilly.Models.ContactViewModel
+@{
+    ViewData["Title"] = "Contactez-nous";
+}
+
+<h2>Contactez-nous</h2>
+<div class="contact-form">
+    <form asp-action="Index" method="post" id="contactForm">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Nom:</label>
+            <input asp-for="Name" class="form-control" id="nom" placeholder="Ex: Dupont Nicola" required />
+            <div id="nomError" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email:</label>
+            <input asp-for="Email" class="form-control" id="email" placeholder="Ex: exemple@gmail.com" required />
+            <div id="emailError" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Telephone" class="form-label">Téléphone:</label>
+            <input asp-for="Telephone" class="form-control" id="telephone" placeholder="Ex: 03 12 12 09 ou 03.12.12.09" required />
+            <div id="telephoneError" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Objet" class="form-label">Objet:</label>
+            <select asp-for="Objet" class="form-select" id="Objet" required>
+                <option value="" disabled selected>Sélectionnez un objet</option>
+                <option value="demande_information">Demande d'information</option>
+                <option value="commande">Commande</option>
+                <option value="reclamation">Réclamation</option>
+                <option value="retour_produit">Retour produit</option>
+                <option value="autre">Autre</option>
+            </select>
+            <div id="objetError" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Message" class="form-label">Message:</label>
+            <textarea asp-for="Message" class="form-control" id="message" rows="4" placeholder="Écrivez votre message ici..." required></textarea>
+            <div id="messageError" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3 form-check">
+            <input asp-for="Consentement" class="form-check-input" id="Consentement" required />
+            <label asp-for="Consentement" class="form-check-label">J'accepte que mes données personnelles soient utilisées pour répondre à ma demande.</label>
+            <div id="consentementError" class="text-danger"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Envoyer le message</button>
+    </form>
+
+    @if (TempData["Success"] != null)
+
+    {
+    <div class="alert alert-success">@TempData["Success"]</div>
+    }
+</div>
+
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script src="@Url.Content("~/js/form-validation.js")"></script>
+}
+

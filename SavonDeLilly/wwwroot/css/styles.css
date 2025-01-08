@@ -1,0 +1,425 @@
+﻿/* Styles de base */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding-bottom: 9vh;
+    margin: auto;
+    padding: auto;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+/* Styles pour la navbar */
+.navbar {
+    border-radius: 10px;
+    padding: 10px; /* Espacement interne de la navbar */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles pour les éléments de la navbar */
+.navbar-nav .nav-link {
+    position: relative;
+}
+
+    /* Styles pour la barre sous les liens */
+    .navbar-nav .nav-link::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: black;
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    /* Afficher la barre au survol */
+    .navbar-nav .nav-link:hover::after {
+        transform: scaleX(1);
+    }
+/* Espacement entre les éléments de la navbar */
+.navbar-nav .nav-item {
+    margin-right: 180px; /* Espacement à droite de chaque élément */
+}
+
+    /* Pour éviter que le dernier élément ait un espacement supplémentaire */
+    .navbar-nav .nav-item:last-child {
+        margin-right: 0; /* Pas d'espacement après le dernier élément */
+    }
+/* Espacement autour de la marque de la navbar */
+.navbar-brand {
+    margin-right: 63em; /* Espacement à droite de la marque */
+    margin-left: 100px; /* Espacement à gauche de la marque */
+}
+
+
+/* Titre de la catégorie */
+.category-title {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Header avec barre de recherche et icône du panier */
+.header {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    width: 250px;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.search-filter {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.cart-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+    .cart-icon img {
+        width: 30px;
+        height: 30px;
+    }
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8em;
+}
+
+/* Conteneur des détails du panier */
+.cart-details-container {
+    position: fixed;
+    top: 45%; /* Ajuste la position verticale */
+    right: 4%; /* Décale du bord droit */
+    width: 600px; /* Augmente la largeur pour un affichage plus clair */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: none;
+    padding: 20px;
+    z-index: 1000;
+}
+
+    .cart-details-container.show {
+        display: block;
+    }
+
+/* Style pour les éléments du panier */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+    .cart-item:last-child {
+        border-bottom: none;
+    }
+
+.cart-item-name {
+    font-weight: bold;
+}
+
+.cart-item-price {
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Styles pour le contrôle de quantité */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+    .quantity-control button {
+        width: 30px;
+        height: 30px;
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 1.2em;
+    }
+
+    .quantity-control input[type="number"] {
+        width: 50px;
+        text-align: center;
+        font-size: 1em;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+/* Styles de fond pour les catégories */
+.background-category1 {
+    background-color: #E3E6F5;
+}
+
+.background-category2 {
+    background-color: #F7E8C5;
+}
+
+.background-category3 {
+    background-color: #F6D5D5;
+}
+
+/* Grille de produits */
+.product-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 60px;
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 90%;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+/* Styles de la carte */
+.flip-card {
+    margin: auto;
+    width: 100%;
+    max-width: 270px;
+}
+
+.card {
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    margin-bottom: 30px;
+}
+
+    .card img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+    }
+
+.card-body {
+    padding: 5px;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.card-title,
+.card-text,
+.card-price {
+    margin: 3px 0;
+    font-size: 1em;
+}
+
+/* Animation de la carte */
+.flip-card {
+    background-color: transparent;
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+    margin: 40px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.flip-card-front {
+    background-color: #fff;
+    color: black;
+}
+
+.flip-card-back {
+    background-color: #f8f9fa;
+    color: black;
+    transform: rotateY(180deg);
+}
+
+/* Styles pour le conteneur des boutons */
+.cart-buttons-container {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.cart-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+    .cart-buttons button {
+        flex: 1;
+        margin: 0 5px;
+        padding: 5px;
+        border: 1px solid black;
+        border-radius: 5px;
+        background-color: transparent;
+        color: black;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 0.9em;
+        text-align: center;
+    }
+
+        .cart-buttons button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+/* Bouton de suppression (poubelle rouge) */
+.remove-item-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.remove-item-img {
+    width: 35px; /* Ajustez la taille selon votre besoin */
+    height: 35px;
+    transition: transform 0.3s ease-in-out;
+}
+
+    .remove-item-img:hover {
+        transform: scale(1.1); /* Effet d'agrandissement au survol */
+    }
+
+.clear-cart-btn {
+    background-color: #d9534f; /* Rouge clair */
+    color: #fff; /* Texte blanc */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+    .clear-cart-btn:hover {
+        background-color: #c9302c;
+        transform: scale(0.98);
+    }
+/* Bouton de fermeture en forme de croix */
+.close-cart-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+    .close-cart-btn:hover {
+        color: #d9534f;
+    }
+/* Bouton de validation de la commande */
+.cart-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.cart-action-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+    .cart-action-btn:hover {
+        background-color: #4CAF50;
+        transform: scale(0.98);
+    }
+
+    .cart-action-btn:active {
+        transform: scale(0.98);
+    }
+
+.card-stock.out-of-stock {
+    color: red;
+    font-weight: bold;
+}
+
+
+.card-stock.in-stock {
+    color: green;
+}
