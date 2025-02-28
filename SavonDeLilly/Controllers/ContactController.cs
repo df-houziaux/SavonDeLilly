@@ -53,8 +53,8 @@ namespace SavonDeLilly.Controllers
                 using (MailMessage mailMessage = new MailMessage())
                 {
                     // Configuration du message
-                    mailMessage.From = new MailAddress("df.houziaux@gmail.com");
-                    mailMessage.To.Add("david.houziaux@wanadoo.fr");
+                    mailMessage.From = new MailAddress("david.houziaux@wanadoo.fr");
+                    mailMessage.To.Add("df.houziaux@gmail.com");
                     mailMessage.Subject = "Nouveau message de contact";
                     mailMessage.IsBodyHtml = true;
                     mailMessage.Body = $"<p><strong>Nom :</strong> {model.Name}</p>" +

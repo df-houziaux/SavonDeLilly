@@ -50,22 +50,27 @@ namespace SavonDeLilly.Controllers
 
         // Nouvelle méthode pour rechercher des produits
         [HttpGet("/api/products/search")]
+        // Afficher les résultats de la recherche
         public async Task<IActionResult> Search(string query)
         {
-            // Vérifier que la requête n'est pas vide
             if (string.IsNullOrWhiteSpace(query))
             {
-                return BadRequest("La requête de recherche ne peut pas être vide.");
+                return RedirectToAction("Index");
             }
 
-            // Récupérer tous les produits qui correspondent à la recherche
             var products = await _context.Products
-                .Where(p => p.Name.Contains(query)).ToListAsync();
+                .Where(p => p.Name.Contains(query) || p.Ingredients.Contains(query))
+                .ToListAsync();
 
-            Console.WriteLine(products);
+            if (!products.Any())
+            {
+                TempData["SearchMessage"] = "Aucun produit trouvé.";
+                return RedirectToAction("Index");
+            }
 
-            return Ok(products);
+            return View("Category", products);
         }
+
 
         // API pour sauvegarder le panier dans la session
         [HttpPost("/api/cart/save")]

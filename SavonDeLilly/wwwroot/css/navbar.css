@@ -1,0 +1,241 @@
+﻿/* ========================== 
+   EN-TÊTE & NAVIGATION 
+========================== */
+
+/* Conteneur général (logo + barre de navigation) */
+.header-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #F7F6CF;
+    z-index: 1001;
+    transition: top 0.3s ease-in-out;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 0; /* Ajout de padding pour l'espace intérieur */
+}
+
+/* Conteneur du logo */
+.logo-container {
+    text-align: center;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Style du logo */
+.logo-img {
+    width: auto;
+    height: 250px; /* Ajustement de la hauteur pour la réactivité */
+    object-fit: contain;
+}
+
+/* ========================== 
+   BARRE DE NAVIGATION 
+========================== */
+.navbar {
+    background-color: #B6D8F2;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-size: 1.5rem; /* Taille de police relative */
+}
+
+/* Espacement pour les éléments de la barre de navigation */
+.navbar-nav {
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px; /* Réduction de l'espace entre les éléments */
+    margin-left: auto;
+}
+
+    .navbar-nav .nav-link {
+        position: relative;
+        padding: 15px 20px; /* Réduction du padding pour la réactivité */
+        font-size: 1.2rem; /* Taille de police relative */
+        color: #333;
+        transition: color 0.3s ease-in-out;
+    }
+
+        /* Effet de soulignement noir au survol */
+        .navbar-nav .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0%;
+            height: 3px;
+            background-color: black;
+            transition: width 0.3s ease-in-out;
+        }
+
+        /* Effets au survol */
+        .navbar-nav .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: black;
+        }
+
+/* ========================== 
+   EFFET DE DÉFILEMENT 
+========================== */
+
+/* Masquer le logo lors du défilement */
+.header-container.scrolled .logo-container {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s, height 0.3s ease-in-out;
+}
+
+/* Décaler le contenu pour éviter qu'il ne soit masqué sous la barre de navigation */
+main {
+    margin-top: 120px;
+}
+
+/* ========================== 
+   RECHERCHE & PANIER 
+========================== */
+
+/* Conteneur de recherche et de panier */
+.search-cart-container {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Réduction de l'espace entre les éléments */
+    justify-content: flex-end;
+    margin-right: 20px; /* Ajustement de la marge */
+}
+
+/* Barre de recherche */
+.search-bar {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem; /* Taille de police relative */
+    width: 300px; /* Largeur pour les petits écrans */
+    transition: all 0.3s ease-in-out;
+}
+
+    .search-bar:focus {
+        border-color: #000;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+/* Filtre de recherche */
+.search-filter {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem; /* Taille de police relative */
+    cursor: pointer;
+    width: 200px; /* Largeur uniforme avec la barre de recherche */
+}
+
+/* Style de l'icône de panier */
+.cart-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+    .cart-icon img {
+        width: 50px; /* Ajustement de la taille pour les petits écrans */
+        height: 50px;
+    }
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 3px 8px; /* Ajustement du padding */
+    font-size: 0.8rem; /* Taille de police relative */
+    font-weight: bold;
+}
+
+.btn-primary {
+    font-size: 1rem; /* Taille de police relative */
+    padding: 10px 10px;
+}
+
+/* ========================== 
+   DESIGN RESPONSIF 
+========================== */
+@media (max-width: 768px) {
+    .search-cart-container {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .search-bar,
+    .search-filter {
+        width: 100%; /* Prendre toute la largeur pour les petits écrans */
+    }
+
+    .navbar-nav {
+        flex-direction: column; /* Réorganiser les éléments en colonne */
+        gap: 10px; /* Réduction de l'espace entre les éléments */
+    }
+}
+
+/* ========================== 
+   STYLES DE POPUP 
+========================== */
+
+/* Conteneur de popup */
+.popup {
+    display: none;
+    position: absolute;
+    background-color: #b6d8f2;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 100;
+    top: 115%; /* Placer le popup juste en dessous */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    text-align: center;
+}
+
+/* Liens dans le popup */
+.popup-item {
+    display: block;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+    .popup-item:hover {
+        text-decoration: underline;
+    }
+
+/* Affichage lorsqu'actif */
+.show {
+    display: block;
+    font-size: 1.2rem; /* Taille de police relative */
+}
+
+/* ========================== 
+   STYLES DE CATÉGORIE 
+========================== */
+.lavande {
+    background-color: #e3e6f5;
+    font-weight: bold;
+}
+
+.vanille {
+    background-color: #f7e8c5;
+    font-weight: bold;
+}
+
+.rosée {
+    background-color: #f6d5d5;
+    font-weight: bold;
+}

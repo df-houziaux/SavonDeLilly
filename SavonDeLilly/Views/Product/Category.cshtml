@@ -25,23 +25,7 @@
     <h1 class="category-title">Produits de la Catégorie</h1>
 </div>
 
-<div class="header">
-    <div class="search-container">
-        <input type="text" id="searchInput" class="search-bar" placeholder="Rechercher un produit..." />
-        <select id="searchFilter" class="search-filter">
-            <option value="name">Nom</option>
-            <option value="ingredient">Ingrédient</option>
-            <option value="price-asc">Prix - Moins Cher au Plus Cher</option>
-            <option value="price-desc">Prix - Plus Cher au Moins Cher</option>
-        </select>
-        <a href="javascript:void(0);" id="cartIconLink">
-            <div class="cart-icon">
-                <img src="~/images/panier.png" alt="Panier" />
-                <span id="cartCount" class="cart-count">0</span>
-            </div>
-        </a>
-    </div>
-</div>
+
 
 <div class="product-list-grid @backgroundClass" id="product-container">
     @foreach (var product in Model)
@@ -104,6 +88,7 @@
     <div id="cartTotalContainer">
         <span>Total : </span><span id="cartTotal">0.00 €</span>
     </div>
+ 
     <button id="clearCartBtn" class="clear-cart-btn">Vider le Panier</button>
     <button id="validateOrderBtn" class="cart-action-btn">Valider la commande</button>
 </div>

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SavonDeLilly")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d8813f63059dca5262a9761c0d2cfe81e60eb04")]
 [assembly: System.Reflection.AssemblyProductAttribute("SavonDeLilly")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SavonDeLilly")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

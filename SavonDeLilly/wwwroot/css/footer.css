@@ -1,0 +1,197 @@
+﻿/* ========================== 
+   CONTENEUR PRINCIPAL 
+========================== */
+
+body {
+    height: 100%; /* Assurer que le corps prend toute la hauteur de la fenêtre */
+    margin: 0; /* Supprimer les marges par défaut */
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Disposition verticale du contenu */
+    min-height: 100vh; /* Minimum hauteur de la fenêtre */
+}
+
+.content {
+    flex: 1; /* Permet au contenu de prendre toute la hauteur disponible */
+}
+
+/* ========================== 
+   FOOTER PRINCIPAL 
+========================== */
+
+.footer {
+    display: flex;
+    justify-content: space-between; /* Espacement entre les sections */
+    align-items: center; /* Centrer le contenu verticalement */
+    background-color: #b6d8f2;
+    /*padding: 0px;*/ /* Ajustement du padding pour une meilleure adaptation */
+    color: black;
+    width: 100%; /* S'assurer que le footer utilise toute la largeur */
+    flex-wrap: wrap; /* Permettre au contenu de se replier sur des écrans plus petits */
+    position: relative; /* Pour un meilleur contrôle du positionnement */
+    bottom: 0px; /* Positionner le footer en bas */
+}
+
+/* ========================== 
+   TITRES DU PIED DE PAGE 
+========================== */
+
+.footer-title {
+    font-size: 13px; /* Ajuster la taille de la police */
+    color: black; /* Couleur du texte */
+    margin: 10px 0; /* Marge */
+    text-align: center; /* Centrer le texte */
+    margin-top: -23px;
+}
+
+.footer-subtitle {
+    font-size: 13px; /* Ajustement de la taille pour le sous-titre */
+    color: black; /* Couleur du texte pour le sous-titre */
+    margin: 5px 0 0; /* Marge : haut 5px, bas 0 */
+}
+
+/* ========================== 
+   LIENS DU FOOTER 
+========================== */
+
+.footer a {
+    text-decoration: none;
+    color: darkblue;
+    font-size: 13px; /* Ajustement de la taille de la police */
+    margin: 5px 0; /* Marge autour des liens */
+}
+
+/* ========================== 
+   LOGO DU FOOTER 
+========================== */
+.logo-footer {
+    height: auto; /* Ajuste automatiquement la taille du logo */
+    max-width: 130px; /* Limite la largeur maximale du logo */
+    margin: 3px 150px 30px; /* Réduire la marge supérieure à 5px */
+}
+
+/* ========================== 
+   SECTIONS DU FOOTER 
+========================== */
+
+.footer-info, .contact-info, .social-links, .contact-button {
+    flex: 1; /* Permet à chaque section de grandir également */
+    text-align: center; /* Centre le texte dans chaque section */
+    margin: 10px; /* Ajout d'une marge autour des sections */
+}
+
+.contact-location {
+    font-size: 13px; /* Taille de la police */
+    color: #333; /* Couleur du texte */
+    text-align: center; /* Centrer le texte */
+    margin: 5px 0; /* Marges autour du texte */
+    display: flex; /* Utiliser flex pour aligner l'icône et le texte */
+    align-items: center; /* Centrer verticalement le contenu */
+    justify-content: center; /* Centrer horizontalement le contenu */
+}
+
+
+
+/* ========================== 
+   RÉSEAUX SOCIAUX 
+========================== */
+
+.social-links {
+    display: flex;
+    justify-content: center; /* Centrer les icônes */
+    gap: 15px; /* Espacement entre les icônes */
+    margin: 5px; /* Réduction de la marge au-dessus et au-dessous des icônes */
+}
+
+    .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px; /* Taille du conteneur des icônes */
+        height: 40px;
+        border-radius: 50%; /* Icônes en cercle */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-top: -20px; /* Marge négative pour remonter les icônes */
+    }
+
+    .social-links img {
+        width: 30px; /* Taille des icônes */
+        height: 30px;
+    }
+
+
+/* ========================== 
+   LIEN GITHUB 
+========================== */
+
+.github-link {
+    background-color: white; /* Fond noir pour GitHub */
+    padding: 5px 10px; /* Ajustement du padding */
+    color: white; /* Couleur du texte */
+}
+
+/* Effet au survol des liens sociaux */
+.social-links a:hover {
+    transform: scale(1.1); /* Effet d'agrandissement au survol */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* ========================== 
+   BOUTON DE CONTACT 
+========================== */
+
+
+.btn-contact {
+    background-color: #f7f6cf;
+    color: white; /* Changement de couleur pour une meilleure lisibilité */
+    padding: 10px 40px; /* Ajustement du padding */
+    border-radius: 5px;
+    border: none; /* Supprimer la bordure par défaut */
+    cursor: pointer; /* Changer le curseur au survol */
+    margin-top: 40px; /* Réduire la marge supérieure */
+}
+
+    /* Effet au survol du bouton de contact */
+    .btn-contact:hover {
+        background-color: #e3e3b3; /* Changement de couleur au survol */
+    }
+
+
+/* ========================== 
+   MEDIA QUERIES 
+========================== */
+
+@media (max-width: 768px) {
+    .footer {
+        flex-direction: column; /* Passer en colonne sur les petits écrans */
+        align-items: center; /* Centrer le contenu horizontalement */
+    }
+
+    .footer-title {
+        font-size: 18px; /* Ajustement pour les écrans plus petits */
+    }
+
+    .footer-subtitle {
+        font-size: 12px; /* Ajustement pour les écrans plus petits */
+    }
+
+    .footer a {
+        font-size: 16px; /* Ajustement pour les écrans plus petits */
+    }
+
+    .social-links a {
+        width: 30px; /* Taille du conteneur des icônes */
+        height: 30px;
+    }
+
+    .social-links img {
+        width: 25px; /* Taille des icônes */
+        height: 25px;
+    }
+
+    .btn-contact {
+        padding: 8px 12px; /* Ajustement du padding pour les écrans plus petits */
+    }
+}

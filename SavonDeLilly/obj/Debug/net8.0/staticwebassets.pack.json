@@ -1,12 +1,16 @@
 {
   "Files": [
     {
-      "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\SavonDeLilly.bundle.scp.css",
-      "PackagePath": "staticwebassets\\SavonDeLilly.bundle.scp.css"
+      "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\css\\footer.css",
+      "PackagePath": "staticwebassets\\css\\footer.css"
     },
     {
-      "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\css\\carousel.css",
-      "PackagePath": "staticwebassets\\css\\carousel.css"
+      "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\css\\home.css",
+      "PackagePath": "staticwebassets\\css\\home.css"
+    },
+    {
+      "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\css\\navbar.css",
+      "PackagePath": "staticwebassets\\css\\navbar.css"
     },
     {
       "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\css\\site.css",
@@ -17,12 +21,16 @@
       "PackagePath": "staticwebassets\\css\\styles.css"
     },
     {
-      "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\css\\typography.css",
-      "PackagePath": "staticwebassets\\css\\typography.css"
-    },
-    {
       "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\images\\Logo.png",
+      "PackagePath": "staticwebassets\\images\\Logo.png"
+    },
+    {
+      "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\images\\LogoProfessionnel1.jpg",
+      "PackagePath": "staticwebassets\\images\\LogoProfessionnel1.jpg"
     },
     {
       "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\images\\bougie1.jpg",
@@ -51,10 +59,6 @@
     {
       "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\images\\img_carrousel_3.jpg",
       "PackagePath": "staticwebassets\\images\\img_carrousel_3.jpg"
-    },
-    {
-      "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\images\\logo.png",
-      "PackagePath": "staticwebassets\\images\\logo.png"
     },
     {
       "Id": "E:\\c sharp\\SavonDeLilly\\SavonDeLilly\\wwwroot\\images\\panier.png",

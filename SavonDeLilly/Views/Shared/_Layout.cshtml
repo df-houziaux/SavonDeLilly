@@ -1,51 +1,79 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ProjetValilou</title>
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/navbar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/footer.css" asp-append-version="true" />
+    <link rel="icon" type="image/png" href="~/favicon.ico" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="logo-container">
+    <a asp-area="" asp-controller="Home" asp-action="Index">
+        <img src="@Url.Content("~/images/Logo.png")" alt="Les Savons de Lily" class="logo-img">
+    </a>
+    </div>
+   
+        <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
-                <!-- Remplacer le texte par le logo -->
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="@Url.Content("~/images/savondelilly.jpg")" alt="Les Savons de Lily" style="max-height: 50px; height: auto;" />
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <div class="navbar-collapse collapse">
+                    <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Accueil</a>
+                            <a class="nav-link fs-3" asp-area="" asp-controller="Home" asp-action="Index">Accueil</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#" id="produitsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Produits
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="produitsDropdown">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Category1">Catégorie 1</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Category2">Catégorie 2</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="Category3">Catégorie 3</a></li>
-                            </ul>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-dark fs-3" href="#" id="produitsButton" role="button" aria-haspopup="true" aria-expanded="false">Produits</a>
+                        <div id="produitsPopup" class="popup" aria-labelledby="produitsButton">
+                            <a class="popup-item lavande" asp-area="" asp-controller="Product" asp-action="Category1">Savon lavande</a>
+                            <a class="popup-item vanille" asp-area="" asp-controller="Product" asp-action="Category2">Savon vanille</a>
+                            <a class="popup-item rosée" asp-area="" asp-controller="Product" asp-action="Category3">Savon rosée</a>
+                        </div>
+                    </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link fs-3" asp-area="" asp-controller="Client" asp-action="Inscription">Inscription</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Inscription">Inscription</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contact" asp-action="Index">Contactez-nous</a>
+                            <a class="nav-link fs-3" asp-area="" asp-controller="Contact" asp-action="Index">Contactez-nous</a>
                         </li>
                     </ul>
+
+                <div class="search-cart-container ms-auto">
+                    <!-- Barre de recherche avec formulaire -->
+                    <form id="searchForm" action="@Url.Action("Search", "Product")" method="get" class="d-flex">
+                        <input type="text" id="searchInput" name="query" class="form-control search-bar" placeholder="Rechercher un produit..." required />
+                        <select id="searchFilter" name="filter" class="form-select search-filter">
+                            <option value="name">Nom</option>
+                            <option value="ingredient">Ingrédient</option>
+                            <option value="price-asc">Prix - Moins Cher au Plus Cher</option>
+                            <option value="price-desc">Prix - Plus Cher au Moins Cher</option>
+                        </select>
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                    </form>
+
+                    <!-- Icône du panier -->
+                    <a href="javascript:void(0);" id="cartIconLink" class="position-relative">
+                        <div class="cart-icon">
+                            <img src="~/images/panier.png" alt="Panier" width="50" />
+                            <span id="cartCount" class="cart-count badge bg-danger position-absolute top-0 start-100 translate-middle">0</span>
+                        </div>
+                    </a>
+                </div>
                 </div>
             </div>
         </nav>
-    </header>
+   
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -53,11 +81,34 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="footer">
-            &copy; 2024 - ProjetValilou - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="logo-container">
+            <img src="~/images/LogoProfessionnel1.jpg" alt="Logo Houziaux David" class="logo-footer">
+        </div>
+        <div class="footer-info">
+            <p class="footer-title">&copy; 2025 - Houziaux David | Développement & Création Web</p>
+            <p class="footer-subtitle">Propulsé par passion & innovation 🚀</p>
+        </div>
+        <div class="contact-info">
+            <p class="contact-email">📧 <a href="mailto:df.houziaux@gmail.com">df.houziaux@gmail.com</a></p>
+            <p class="contact-location">📍 Basé en France</p>
+        </div>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/david-houziaux-a6a33a298/" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn">
+            </a>
+            <a href="https://github.com/df-houziaux" target="_blank" class="github-link">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
+            </a>
+        </div>
+        <div class="contact-button">
+            <a href="@Url.Action("Index", "Contact")" class="btn-contact">Me Contacter</a>
         </div>
     </footer>
+
+
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -23,6 +23,6 @@ namespace SavonDeLilly.Models
         public string Message { get; set; }
 
         [Required(ErrorMessage = "Veuillez donner votre accord")]
-        public string Consentement { get; set; }
+        public bool Consentement { get; set; }
     }
 }
