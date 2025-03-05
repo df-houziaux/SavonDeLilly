@@ -8,19 +8,19 @@
     <form asp-action="Index" method="post" id="contactForm">
         <div class="mb-3">
             <label asp-for="Name" class="form-label">Nom:</label>
-            <input asp-for="Name" class="form-control" id="nom" placeholder="Ex: Dupont Nicola" required />
+            <input asp-for="Name" class="form-control" id="nom" placeholder="Dupont Nicolas" required />
             <div id="nomError" class="text-danger"></div>
         </div>
 
         <div class="mb-3">
             <label asp-for="Email" class="form-label">Email:</label>
-            <input asp-for="Email" class="form-control" id="email" placeholder="Ex: exemple@gmail.com" required />
+            <input asp-for="Email" class="form-control" id="email" placeholder="you@gmail.com" required />
             <div id="emailError" class="text-danger"></div>
         </div>
 
         <div class="mb-3">
             <label asp-for="Telephone" class="form-label">Téléphone:</label>
-            <input asp-for="Telephone" class="form-control" id="telephone" placeholder="Ex: 03 12 12 09 ou 03.12.12.09" required />
+            <input asp-for="Telephone" class="form-control" id="telephone" placeholder="03 12 34 56 78" required />
             <div id="telephoneError" class="text-danger"></div>
         </div>
 

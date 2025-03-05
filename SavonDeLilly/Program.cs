@@ -22,8 +22,10 @@ namespace SavonDeLilly
                 options.Cookie.IsEssential = true;
             });
 
-            // Add other services like controllers, Razor Pages, etc.
+            // Add controllers and views
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddTransient<MailService>();
 
             var app = builder.Build();
 
@@ -50,32 +52,18 @@ namespace SavonDeLilly
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            // Call the DbInitializer to seed data
+            // Initialize database
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
                 {
+                    var context = services.GetRequiredService<ApplicationDbContext>();
+                    await context.Database.MigrateAsync(); // Apply migrations
                     await DbInitializer.Initialize(services);
                 }
                 catch (Exception ex)
                 {
-                    // Handle exceptions (e.g., log the error)
-                    Console.WriteLine(ex.Message);
-                }
-            }
-
-            // Call the DbInitializer to seed data
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    await DbInitializer.Initialize(services);
-                }
-                catch (Exception ex)
-                {
-                    // Handle exceptions (e.g., log the error)
                     Console.WriteLine(ex.Message);
                 }
             }
