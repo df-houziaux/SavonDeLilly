@@ -24,7 +24,7 @@
 /* Style du logo */
 .logo-img {
     width: auto;
-    height: 250px; /* Ajustement de la hauteur pour la réactivité */
+    height: 240px; /* Ajustement de la hauteur pour la réactivité */
     object-fit: contain;
 }
 
@@ -33,11 +33,11 @@
 ========================== */
 .navbar {
     background-color: #B6D8F2;
-    padding: 10px 0;
+    padding: -5px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
-    font-size: 1.5rem; /* Taille de police relative */
+    font-size: 1.3rem; /* Taille de police relative */
 }
 
 /* Espacement pour les éléments de la barre de navigation */
@@ -51,7 +51,7 @@
     .navbar-nav .nav-link {
         position: relative;
         padding: 15px 20px; /* Réduction du padding pour la réactivité */
-        font-size: 1.2rem; /* Taille de police relative */
+        font-size: 1.3rem; /* Taille de police relative */
         color: #333;
         transition: color 0.3s ease-in-out;
     }

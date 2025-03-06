@@ -3,9 +3,9 @@
 ========================== */
 
 .container {
-    width: 100%; /* Utiliser toute la largeur de l'écran */
-    max-width: 1200px; /* Largeur maximale pour éviter un trop grand étirement */
-    margin: 0 auto; /* Centre le contenu horizontalement */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /* ==========================
@@ -13,8 +13,8 @@
 ========================== */
 
 .fs-1 {
-    font-size: 6vw; /* Taille de police relative à la largeur de l'écran */
-    color: #333; /* Couleur du texte */
+    font-size: 6vw;
+    color: #333;
     text-align: center;
 }
 
@@ -22,16 +22,16 @@
    STYLE DU SLOGAN
 ========================== */
 .slogan {
-    font-size: 1vw; /* Taille de texte relative */
-    font-weight: bold; /* Texte en gras */
-    text-align: center; /* Centrer le texte */
-    color: #333; /* Couleur du texte */
-    background-color: #F7E8C5; /* Couleur de fond légère */
-    padding: 15px 20px; /* Espacement interne */
-    border-radius: 8px; /* Coins arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour du relief */
-    width: fit-content; /* Ajuste la largeur au texte */
-    margin: 60px auto; /* Centrage horizontal avec marges */
+    font-size: 1vw;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    background-color: #F7E8C5;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    margin: 60px auto;
 }
 
 /* ==========================
@@ -39,16 +39,16 @@
 ========================== */
 
 #carouselExample {
-    width: 100%; /* S'assurer que le carrousel utilise toute la largeur de l'écran */
-    max-height: 500px; /* Hauteur maximale du carrousel */
-    overflow: hidden; /* Cacher les débordements d'image */
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
 }
 
 .carousel-item img {
-    width: 100%; /* Utiliser toute la largeur de l'écran */
-    height: auto; /* Ajuster automatiquement la hauteur */
-    object-fit: cover; /* Ajustement de l'image pour remplir complètement le conteneur */
-    max-height: 100%; /* Empêche l'image de dépasser la hauteur maximale */
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-height: 100%;
 }
 
 /* ==========================
@@ -57,7 +57,7 @@
 
 @media (max-width: 768px) {
     #carouselExample {
-        max-height: 300px; /* Hauteur maximale pour les écrans plus petits */
+        max-height: 300px;
     }
 }
 
@@ -67,9 +67,9 @@
 ========================== */
 
 hr {
-    border-top: 3px solid #333 !important; /* Couleur et style de la ligne */
-    margin: 80px auto !important; /* Marge autour de la ligne */
-    width: 80%; /* Largeur de la ligne */
+    border-top: 3px solid #333 !important;
+    margin: 80px auto !important;
+    width: 80%;
 }
 
 /* ==========================
@@ -77,38 +77,38 @@ hr {
 ========================== */
 
 section {
-    margin-bottom: 60px; /* Espacement entre les sections */
+    margin-bottom: 60px;
 }
 
 h2 {
-    font-size: 2vw; /* Taille de police pour les titres de section */
-    color: #333; /* Couleur du texte */
-    margin-bottom: 40px; /* Espacement sous les titres */
+    font-size: 2vw;
+    / color: #333;
+    margin-bottom: 40px;
     text-align: center;
 }
 
 ul {
-    list-style-type: none; /* Supprime les puces des listes */
-    padding-left: 0; /* Supprime le padding gauche par défaut des listes */
+    list-style-type: none;
+    padding-left: 0;
     text-align: center;
 }
 
 li {
-    margin-bottom: 10px; /* Espacement entre les éléments de liste */
-    font-size: 1vw; /* Taille de police relative */
+    margin-bottom: 10px;
+    font-size: 1vw;
 }
 
 /* ==========================
    STYLE DES TÉMOIGNAGES
 ========================== */
 .testimonial {
-    background: linear-gradient(135deg, #ffefba, #ffffff); /* Dégradé léger */
+    background: linear-gradient(135deg, #ffefba, #ffffff);
     padding: 20px;
-    border-radius: 12px; /* Coins arrondis */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Ombre élégante */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     text-align: center;
-    max-width: 600px; /* Largeur maximale */
-    margin: 20px auto; /* Marges verticales réduites */
+    max-width: 600px;
+    margin: 20px auto;
     position: relative;
     font-family: 'Georgia', serif;
 }
@@ -125,7 +125,7 @@ li {
     font-size: 1em;
     font-weight: bold;
     color: #333;
-    margin-top: 40px; /* Marges réduites */
+    margin-top: 40px;
 }
 
 /* Ajout de guillemets stylisés */
@@ -152,25 +152,25 @@ li {
 ========================== */
 
 .contact-message {
-    font-size: 1em; /* Taille de police */
-    color: #333; /* Couleur du texte */
-    margin: 20px 0; /* Marge en haut et en bas */
-    line-height: 1.5; /* Hauteur de ligne pour l'espacement */
-    text-align: center; /* Centrer le texte (optionnel) */
+    font-size: 1em;
+    color: #333;
+    margin: 20px 0;
+    line-height: 1.5;
+    text-align: center;
 }
 
 /* Si tu souhaites ajouter des styles spécifiques pour le lien à l'intérieur */
 .contact-link {
-    color: #007bff; /* Couleur de base du lien */
-    text-decoration: none; /* Supprime le soulignement par défaut */
-    font-weight: bold; /* Met le texte en gras */
-    transition: color 0.3s ease; /* Transition douce pour les changements de couleur */
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
     /* Effet au survol pour le lien */
     .contact-link:hover {
-        color: #0056b3; /* Couleur au survol */
-        text-decoration: underline; /* Ajoute un soulignement au survol */
+        color: #0056b3;
+        text-decoration: underline;
     }
 
 /* ==========================
@@ -179,22 +179,22 @@ li {
 
 @media (max-width: 768px) {
     .fs-1 {
-        font-size: 5rem; /* Ajustement pour les écrans plus petits */
+        font-size: 4rem;
     }
 
     .slogan {
-        font-size: 2.5em; /* Ajustement pour les écrans plus petits */
+        font-size: 2.5em;
     }
 
     .testimonial-text {
-        font-size: 2em; /* Ajustement pour les écrans plus petits */
+        font-size: 2em;
     }
 
     h2 {
-        font-size: 4rem; /* Ajustement pour les écrans plus petits */
+        font-size: 3rem;
     }
 
     li {
-        font-size: 1.8em; /* Ajustement pour les écrans plus petits */
+        font-size: 1.8em;
     }
 }

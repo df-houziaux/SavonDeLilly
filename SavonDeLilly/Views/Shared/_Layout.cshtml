@@ -82,30 +82,41 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="logo-container">
-            <img src="~/images/LogoProfessionnel1.jpg" alt="Logo Houziaux David" class="logo-footer">
+    <div class="footer">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-col logo-col">
+                    <img src="~/images/LogoProfessionnel1.jpg" alt="Logo Houziaux David" class="logo-footer">
+                </div>
+                <div class="footer-col text-col">
+                    <p class="footer-text">&copy; 2025 - Houziaux David | Développement & Création Web</p>
+                    <p class="footer-subtext">Propulsé par passion & innovation 🚀</p>
+                </div>
+                <div class="footer-col contact-col">
+                    <div class="contact-info">
+                        <p class="contact-item email">
+                            📧 <a href="mailto:df.houziaux@gmail.com" class="contact-link">df.houziaux@gmail.com</a>
+                        </p>
+                        <p class="contact-item location">📍 <span class="contact-location">Basé en France</span></p>
+                    </div>
+                </div>
+                <div class="footer-col social-col">
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/david-houziaux-a6a33a298/" target="_blank" class="social-icon linkedin">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn">
+                        </a>
+                        <a href="https://github.com/df-houziaux" target="_blank" class="social-icon github">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
+                        </a>
+
+                    </div>
+                    <div class="contact-button">
+                        <a href="@Url.Action("Contact", "Home")" class="btn-contact">Me Contacter</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="footer-info">
-            <p class="footer-title">&copy; 2025 - Houziaux David | Développement & Création Web</p>
-            <p class="footer-subtitle">Propulsé par passion & innovation 🚀</p>
-        </div>
-        <div class="contact-info">
-            <p class="contact-email">📧 <a href="mailto:df.houziaux@gmail.com">df.houziaux@gmail.com</a></p>
-            <p class="contact-location">📍 Basé en France</p>
-        </div>
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/david-houziaux-a6a33a298/" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/LinkedIn_icon.svg" alt="LinkedIn">
-            </a>
-            <a href="https://github.com/df-houziaux" target="_blank" class="github-link">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
-            </a>
-        </div>
-        <div class="contact-button">
-            <a href="@Url.Action("Index", "Contact")" class="btn-contact">Me Contacter</a>
-        </div>
-    </footer>
+    </div>
 
 
 

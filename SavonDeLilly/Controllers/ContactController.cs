@@ -64,7 +64,7 @@ namespace SavonDeLilly.Controllers
                                        $"<p><strong>Message :</strong> {model.Message}</p>";
 
                     // Configuration du client SMTP
-                    using (SmtpClient smtpClient = new SmtpClient("smtp.simply.com", 587))
+                    using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
                     {
                         smtpClient.Credentials = new NetworkCredential("david.houziaux@wanadoo.fr", "Les12calamity"); // Remplacez par vos identifiants SMTP
                         smtpClient.EnableSsl = true;
