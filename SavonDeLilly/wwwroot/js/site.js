@@ -1,18 +1,6 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
-    let header = document.querySelector(".header-container");
-    let lastScrollTop = 0;
+﻿"use strict"
 
-    // Gestion du défilement pour cacher ou afficher le logo
-    window.addEventListener("scroll", function () {
-        let scrollTop = window.scrollY || document.documentElement.scrollTop;
-
-        if (scrollTop > 50) {
-            header.classList.add("scrolled"); // Cache le logo
-        } else {
-            header.classList.remove("scrolled"); // Affiche le logo
-        }
-    });
-
+document.addEventListener("DOMContentLoaded", function () {
     // Gestion de la popup des produits
     let produitsButton = document.getElementById("produitsButton");
     let produitsPopup = document.getElementById("produitsPopup");

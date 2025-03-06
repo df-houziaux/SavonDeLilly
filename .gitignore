@@ -1,1 +1,4 @@
-node_modules/".vs/" 
+bin/
+.vs/
+obj/
+SavonDeLilly/appsettings.json

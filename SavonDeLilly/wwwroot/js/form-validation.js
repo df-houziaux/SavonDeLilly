@@ -65,6 +65,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
+    const validateConsentement = () => {
+        const consentementCheckbox = document.getElementById('Consentement');
+        if (consentementCheckbox.checked) {
+            showError('consentementError', '');
+            return true;
+        } else {
+            showError('consentementError', 'Veuillez donner votre accord pour continuer.');
+            return false;
+        }
+    }
+
     // Validation complète du formulaire
     form.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -72,8 +83,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const isEmailValid = validateEmail();
         const isTelephoneValid = validateTelephone();
         const isMessageValid = validateMessage();
+        const isConsentementValid = validateConsentement();
 
-        if (isNomValid && isEmailValid && isTelephoneValid && isMessageValid) {
+        if (isNomValid && isEmailValid && isTelephoneValid && isMessageValid && isConsentementValid) {
             console.log('Formulaire validé');
             form.submit();
         }

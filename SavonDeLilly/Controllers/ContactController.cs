@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc; // Assurez-vous que cette directive est présente
-using System.Net.Mail;
-using System.Net;
+﻿using Microsoft.AspNetCore.Mvc;
 using SavonDeLilly.Models;
+
 namespace SavonDeLilly.Controllers
 {
-    public class ContactController : Controller // Hérite de Controller
+    public class ContactController(MailService mailService, IConfiguration configuration) : Controller
     {
+        private readonly MailService _mailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
+        private readonly IConfiguration _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+
         [HttpGet]
         public IActionResult Index()
         {
-            return View(); // Retourne la vue pour le formulaire de contact
+            return View();
         }
 
         [HttpPost]
@@ -19,50 +21,28 @@ namespace SavonDeLilly.Controllers
             {
                 try
                 {
-                    // Envoi de l'email
-                    bool isMailSent = SendMail(model);
+                    SendMail(model);
 
-                    if (isMailSent)
-                    {
-                        TempData["Success"] = "Votre message a été envoyé avec succès.";
-                        return RedirectToAction("Index"); // Redirige vers la vue Index
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "L'email n'a pas pu être envoyé. Veuillez réessayer.");
-                    }
+                    TempData["Success"] = "Votre message a été envoyé avec succès.";
+                    return RedirectToAction("Index");
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError("", "Une erreur est survenue lors de l'envoi de l'email : " + ex.Message);
                 }
             }
-
-            return View(model); // Retourne le modèle avec les erreurs
+            return View(model);
         }
 
         /// <summary>
-        /// Envoie un email avec les informations du modèle de contact
+        /// Envoie un email avec les informations du modèle de contact en utilisant MailService
         /// </summary>
         /// <param name="model">Modèle contenant les informations de contact</param>
-        /// <returns>Booléen indiquant si l'email a été envoyé avec succès</returns>
-        private bool SendMail(ContactViewModel model)
+        private void SendMail(ContactViewModel model)
         {
-            try
-            {
-                using (MailMessage mailMessage = new MailMessage())
-                {
-                    // Configuration du message
-                    mailMessage.From = new MailAddress("david.houziaux@wanadoo.fr");
-                    mailMessage.To.Add("df.houziaux@gmail.com");
-                    mailMessage.Subject = "Nouveau message de contact";
-                    mailMessage.IsBodyHtml = true;
-                    mailMessage.Body = $"<p><strong>Nom :</strong> {model.Name}</p>" +
-                                       $"<p><strong>Email :</strong> {model.Email}</p>" +
-                                       $"<p><strong>Téléphone :</strong> {model.Telephone}</p>" +
-                                       $"<p><strong>Objet :</strong> {model.Objet}</p>" +
-                                       $"<p><strong>Message :</strong> {model.Message}</p>";
+            string? senderEmail = _configuration["EmailSettings:SenderEmail"];
 
+<<<<<<< HEAD
                     // Configuration du client SMTP
                     using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
                     {
@@ -76,11 +56,27 @@ namespace SavonDeLilly.Controllers
                 }
             }
             catch (Exception ex)
+=======
+            if (string.IsNullOrEmpty(senderEmail))
+>>>>>>> 8557f8be225927d17ee581fa3af139fd9ae2eeb9
             {
-                // Journalisez ou affichez l'erreur pour le débogage
-                Console.WriteLine("Erreur lors de l'envoi de l'email : " + ex.Message);
-                return false;
+                throw new InvalidOperationException("L'email de l'expéditeur n'est pas configuré.");
             }
+
+            string emailBody = $"<p><strong>Nom :</strong> {model.Name}</p>" +
+                               $"<p><strong>Email :</strong> {model.Email}</p>" +
+                               $"<p><strong>Téléphone :</strong> {model.Telephone}</p>" +
+                               $"<p><strong>Objet :</strong> {model.Objet}</p>" +
+                               $"<p><strong>Message :</strong> {model.Message}</p>";
+
+            _mailService.CreateMail(
+                from: senderEmail,
+                to: senderEmail,
+                subject: "Nouveau message de contact",
+                body: emailBody
+            )
+            .SetReplyTo(model.Email)
+            .Send();
         }
     }
 }
