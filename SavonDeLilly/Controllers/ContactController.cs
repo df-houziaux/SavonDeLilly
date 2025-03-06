@@ -42,23 +42,8 @@ namespace SavonDeLilly.Controllers
         {
             string? senderEmail = _configuration["EmailSettings:SenderEmail"];
 
-<<<<<<< HEAD
-                    // Configuration du client SMTP
-                    using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        smtpClient.Credentials = new NetworkCredential("david.houziaux@wanadoo.fr", "Les12calamity"); // Remplacez par vos identifiants SMTP
-                        smtpClient.EnableSsl = true;
-
-                        // Envoi de l'email
-                        smtpClient.Send(mailMessage);
-                        return true;
-                    }
-                }
-            }
-            catch (Exception ex)
-=======
             if (string.IsNullOrEmpty(senderEmail))
->>>>>>> 8557f8be225927d17ee581fa3af139fd9ae2eeb9
+
             {
                 throw new InvalidOperationException("L'email de l'expéditeur n'est pas configuré.");
             }
