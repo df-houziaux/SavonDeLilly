@@ -52,22 +52,6 @@ namespace SavonDeLilly
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            // Initialize database
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                try
-                {
-                    var context = services.GetRequiredService<ApplicationDbContext>();
-                    await context.Database.MigrateAsync(); // Apply migrations
-                    await DbInitializer.Initialize(services);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-
             app.Run();
         }
     }

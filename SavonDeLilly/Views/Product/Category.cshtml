@@ -22,7 +22,7 @@
 }
 
 <div style="text-align: center;">
-    <h1 class="category-title">Produits de la Catégorie</h1>
+    <h1 class="category-title">Catalogue de Savons</h1>
 </div>
 
 
@@ -66,15 +66,13 @@
                     <p>@product.Ingredients</p>
                 </div>
             </div>
-            <div class="cart-buttons">
-                <button class="add-to-cart-btn"
-                        data-product-name="@product.Name"
-                        data-product-price="@product.Price"
-                        data-product-stock="@product.Stock"
-                @(product.Stock <= 0 ? "disabled" : "")>
-                    Ajouter au panier
-                </button>
-            </div>
+            <button class="add-to-cart-btn"
+                    data-product-name="@product.Name"
+                    data-product-price="@product.Price"
+                    data-product-stock="@product.Stock"
+            @(product.Stock <= 0 ? "disabled" : "")>
+                <i class="fas fa-shopping-cart cart-icon"></i> Ajouter au panier
+            </button>
         </div>
     }
 </div>
