@@ -1,4 +1,6 @@
-﻿// Éléments DOM
+﻿"use strict"
+
+// Éléments DOM
 const cartCount = document.getElementById('cartCount');
 const cartDetailsContainer = document.getElementById('cartDetailsContainer');
 const cartIconLink = document.getElementById('cartIconLink');
@@ -43,7 +45,7 @@ function showCartDetails() {
         productLink.target = "_blank";
         listItem.appendChild(productLink);
 
-        ////////// Créer un conteneur pour les boutons + et - et le champ de saisie
+        // Créer un conteneur pour les boutons + et - et le champ de saisie
         const quantityContainer = document.createElement('div');
         quantityContainer.style.display = 'inline-flex';
         quantityContainer.style.alignItems = 'center';
@@ -83,7 +85,7 @@ function showCartDetails() {
             showCartDetails();
         };
 
-        //// Bouton pour augmenter la quantité
+        // Bouton pour augmenter la quantité
         const increaseBtn = document.createElement('button');
         increaseBtn.textContent = '+';
         increaseBtn.style.marginLeft = '15px';
@@ -256,99 +258,6 @@ validateOrderBtn.addEventListener('click', () => {
             console.error('Erreur:', error);
         });
 });
-
-searchForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const searchInput = document.getElementById('searchInput');
-    const searchFilter = document.getElementById('searchFilter');
-
-    if (searchInput.value.trim() !== '') {
-        localStorage.setItem('lastSearchQuery', searchInput.value);
-        localStorage.setItem('lastSearchFilter', searchFilter.value);
-
-        // Vérifiez que le localStorage est bien mis à jour avant de soumettre le formulaire
-        console.log('Mise à jour localStorage:', localStorage.getItem('lastSearchQuery'), localStorage.getItem('lastSearchFilter'));
-
-        // Soumettre le formulaire après un petit délai
-        setTimeout(() => {
-            this.submit();
-        }, 200); // Délai réduit
-    }
-});
-
-console.log(localStorage.getItem('lastSearchQuery'));
-console.log(localStorage.getItem('lastSearchFilter'));
-
-// Restaurer les derniers critères de recherche
-if (localStorage.getItem('lastSearchQuery')) {
-    searchInput.value = localStorage.getItem('lastSearchQuery');
-}
-if (localStorage.getItem('lastSearchFilter')) {
-    const lastFilter = localStorage.getItem('lastSearchFilter');
-    // S'assurer que la valeur existe dans le select
-    const optionExists = Array.from(searchFilter.options).some(option => option.value === lastFilter);
-
-    if (optionExists) {
-        searchFilter.value = lastFilter;
-    }
-}
-
-
-//Filtrer dynamiquement les produits affichés si nous sommes sur la page des résultats
-if (productContainer) {
-    searchFilter.addEventListener('change', function () {
-        localStorage.setItem('lastSearchFilter', searchFilter.value);
-        // Si nous sommes sur la page de résultats, soumettre automatiquement le formulaire
-        if (window.location.href.includes('/Product/Search')) {
-            searchForm.submit();
-        }
-    });
-}
-
-////// Fonction pour valider la recherche
-////function validateSearchInput(query) {
-////    const regex = /^[a-zA-Z0-9 ]*$/; // Regex pour n'autoriser que les lettres et les chiffres
-////    return regex.test(query);
-//}
-
-
-
-
-//// Fonction pour filtrer les produits par recherche
-//function filterProducts(query) {
-//    const products = Array.from(productContainer.children);
-//    let found = false; // Variable pour vérifier si un produit a été trouvé
-
-//    products.forEach(product => {
-//        const productName = product.getAttribute('data-name').toLowerCase();
-//        if (productName.includes(query.toLowerCase())) {
-//            product.style.display = '';
-//            found = true; // Un produit correspondant a été trouvé
-//        } else {
-//            product.style.display = 'none';
-//        }
-//    });
-
-//    // Afficher ou masquer le message selon le résultat
-//    if (found) {
-//        noResultsMessage.style.display = 'none'; // Masquer le message
-//    } else {
-//        noResultsMessage.style.display = ''; // Afficher le message
-//    }
-//}
-
-//// Écouteur d'événement pour la soumission du formulaire de recherche
-//searchFilter.addEventListener('submit', function (event) {
-//    event.preventDefault();
-//    const query = searchInput.value;
-//    if (validateSearchInput(query)) {
-//        filterProducts(query);
-//    } else {
-//        alert("Recherche invalide.");
-//    }
-//});
-
 
 // Afficher les détails du panier au chargement
 showCartDetails();

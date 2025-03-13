@@ -37,9 +37,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link fs-4 @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Product" ? "fw-bold text-primary" : "")" href="#" id="produitsButton" role="button" aria-haspopup="true" aria-expanded="false">Produits</a>
                         <div id="produitsPopup" class="popup" aria-labelledby="produitsButton">
-                            <a class="popup-item lavande" asp-area="" asp-controller="Product" asp-action="Category1">Savon lavande</a>
-                            <a class="popup-item vanille" asp-area="" asp-controller="Product" asp-action="Category2">Savon vanille</a>
-                            <a class="popup-item rosée" asp-area="" asp-controller="Product" asp-action="Category3">Savon rosée</a>
+                            <a class="popup-item lavande" asp-area="" asp-controller="Product" asp-action="Category" asp-route-category="Category1">Savon lavande</a>
+                            <a class="popup-item vanille" asp-area="" asp-controller="Product" asp-action="Category" asp-route-category="Category2">Savon vanille</a>
+                            <a class="popup-item rosée" asp-area="" asp-controller="Product" asp-action="Category" asp-route-category="Category3">Savon rosée</a>
                         </div>
                     </li>
 
@@ -118,12 +118,11 @@
         </div>
     </div>
 
-
-
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/recherche.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

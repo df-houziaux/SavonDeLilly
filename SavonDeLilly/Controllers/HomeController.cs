@@ -20,11 +20,6 @@ namespace SavonDeLilly.Controllers
             return View(latestProducts);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -36,9 +31,9 @@ namespace SavonDeLilly.Controllers
             // Remplacez ceci par la logique pour obtenir les données réelles depuis votre base de données
             return new List<Product>
         {
-        new Product { Name = "Savon 1", ImageUrl = "img_carrousel_1.jpg" },
-        new Product { Name = "Savon 2", ImageUrl = "img_carrousel_2.jpg" },
-        new Product { Name = "Savon 3", ImageUrl = "img_carrousel_3.jpg" }
+            new Product { Name = "Savon 1", ImageUrl = "img_carrousel_1.jpg" },
+            new Product { Name = "Savon 2", ImageUrl = "img_carrousel_2.jpg" },
+            new Product { Name = "Savon 3", ImageUrl = "img_carrousel_3.jpg" }
         };
         }
 

@@ -1,6 +1,8 @@
 ﻿/* ========================== 
    STRUCTURE GLOBALE 
 ========================== */
+@import url('styles.css');
+
 html, body {
     height: 100%;
     margin: 0;
@@ -28,7 +30,7 @@ html, body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: auto; /* Assure que le footer reste en bas */
+        margin-top: auto;
         padding: 10px
     }
 
@@ -61,8 +63,8 @@ html, body {
 }
 
 .contact-item {
-    display: flex; /* Utilise Flexbox pour l'alignement */
-    align-items: center; /* Aligne verticalement au centre */
+    display: flex;
+    align-items: center;
 }
 
 
@@ -104,7 +106,7 @@ html, body {
     text-decoration: none;
 }
 
-/* Option : Fixer le footer si on veut qu'il soit toujours visible */
+/* Fixer le footer pour qu'il soit toujours visible */
 .footer.fixed {
     position: fixed;
     bottom: 0;

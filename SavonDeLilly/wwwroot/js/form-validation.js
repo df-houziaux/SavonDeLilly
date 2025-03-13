@@ -1,5 +1,4 @@
-﻿// Affiche un message pour indiquer que le script est chargé
-console.log("Script de validation chargé");
+﻿"use strict";
 
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById("contactForm");
@@ -8,17 +7,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const telephoneInput = document.getElementById('telephone');
     const messageInput = document.getElementById('message');
 
-    // Regular expressions for validation
+    // Expressions régulières de validation
     const regexNom = /^(?![A-Z]{1}$)([A-ZÀ-ÿ][a-zà-ÿ]+(?: [A-ZÀ-ÿ][a-zà-ÿ]+)*)$/;
     const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const regexTelephone = /^(0[1-9][ .]?[0-9]{2}[ .]?[0-9]{2}[ .]?[0-9]{2}[ .]?[0-9]{2})$/;
 
-    // Function to display error messages
+    // Fonction pour afficher les erreurs
     const showError = (elementId, message) => {
         document.getElementById(elementId).textContent = message;
     };
 
-    // Validation functions
+    // Fonctions de validation
     const validateNom = () => {
         const nom = nomInput.value.trim();
         if (regexNom.test(nom)) {
@@ -86,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const isConsentementValid = validateConsentement();
 
         if (isNomValid && isEmailValid && isTelephoneValid && isMessageValid && isConsentementValid) {
-            console.log('Formulaire validé');
             form.submit();
         }
     });

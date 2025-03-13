@@ -17,10 +17,8 @@ namespace SavonDeLilly.Controllers
         [HttpGet]
         public IActionResult Inscription()
         {
-
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -31,11 +29,8 @@ namespace SavonDeLilly.Controllers
                 _context.Clients.Add(model);
                 _context.SaveChanges();
 
-
                 return RedirectToAction("Index", "Home");
             }
-
-
             return View(model);
         }
     }

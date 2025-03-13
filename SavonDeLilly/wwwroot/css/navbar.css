@@ -43,14 +43,14 @@
 .navbar-nav {
     display: flex;
     justify-content: flex-end;
-    gap: 40px; /* Réduction de l'espace entre les éléments */
+    gap: 40px;
     margin-left: auto;
 }
 
     .navbar-nav .nav-link {
         position: relative;
-        padding: 1px 10px; /* Réduction du padding pour la réactivité */
-        font-size: 1.1rem; /* Taille de police relative */
+        padding: 1px 10px;
+        font-size: 1.1rem;
         color: #333;
         transition: color 0.3s ease-in-out;
     }
@@ -88,7 +88,6 @@
     transition: opacity 0.3s, height 0.3s ease-in-out;
 }
 
-/* Décaler le contenu pour éviter qu'il ne soit masqué sous la barre de navigation */
 main {
     margin-top: 120px;
 }
@@ -101,9 +100,9 @@ main {
 .search-cart-container {
     display: flex;
     align-items: center;
-    gap: 20px; /* Réduction de l'espace entre les éléments */
+    gap: 20px;
     justify-content: flex-end;
-    margin-right: 20px; /* Ajustement de la marge */
+    margin-right: 20px;
 }
 
 /* Barre de recherche */
@@ -111,8 +110,8 @@ main {
     padding: 8px 12px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    font-size: 1rem; /* Taille de police relative */
-    width: 300px; /* Largeur pour les petits écrans */
+    font-size: 1rem;
+    width: 300px;
     transition: all 0.3s ease-in-out;
 }
 
@@ -126,9 +125,9 @@ main {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    font-size: 1rem; /* Taille de police relative */
+    font-size: 1rem;
     cursor: pointer;
-    width: 200px; /* Largeur uniforme avec la barre de recherche */
+    width: 200px;
 }
 
 /* Style de l'icône de panier */
@@ -139,7 +138,7 @@ main {
 }
 
     .cart-icon img {
-        width: 50px; /* Ajustement de la taille pour les petits écrans */
+        width: 50px;
         height: 50px;
     }
 
@@ -150,13 +149,13 @@ main {
     background-color: red;
     color: white;
     border-radius: 50%;
-    padding: 3px 8px; /* Ajustement du padding */
-    font-size: 0.8rem; /* Taille de police relative */
-    font-weight: bold;
+    padding: 3px 8px;
+    font-size: 0.8rem;
+    */ font-weight: bold;
 }
 
 .btn-primary {
-    font-size: 1rem; /* Taille de police relative */
+    font-size: 1rem;
     padding: 10px 10px;
 }
 
@@ -173,12 +172,12 @@ main {
 
     .search-bar,
     .search-filter {
-        width: 100%; /* Prendre toute la largeur pour les petits écrans */
+        width: 100%;
     }
 
     .navbar-nav {
-        flex-direction: column; /* Réorganiser les éléments en colonne */
-        gap: 10px; /* Réduction de l'espace entre les éléments */
+        flex-direction: column;
+        gap: 10px;
     }
 }
 
@@ -218,7 +217,7 @@ main {
 /* Affichage lorsqu'actif */
 .show {
     display: block;
-    font-size: 1.2rem; /* Taille de police relative */
+    font-size: 1.2rem;
 }
 
 /* ========================== 

@@ -19,36 +19,38 @@ namespace SavonDeLilly.Controllers
             _context = context;
         }
 
-        // Afficher tous les produits avec Category.cshtml
+        // Afficher tous les produits
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var allProducts = await _context.Products.ToListAsync();
             ViewBag.Category = "Tous les produits";
-            return View("Category", allProducts); // Afficher avec Category.cshtml
+            return View("Category", allProducts);
         }
 
         // Afficher les produits par catégories
-        public async Task<IActionResult> Category1()
+        [HttpGet]
+        [Route("Product/{category:regex(^Category[[0-9]]$)}")]
+        public async Task<IActionResult> Category(string category)
         {
-            ViewBag.Category = "category1";
-            var products = await _context.Products.Where(p => p.Name.Contains("Lavande")).ToListAsync();
+            ViewBag.Category = category;
+
+            string filter = category switch
+            {
+                "Category1" => "Lavande",
+                "Category2" => "Vanille",
+                "Category3" => "Rosé",
+                _ => ""
+            };
+
+            var products = await _context.Products
+                .Where(p => p.Name.Contains(filter))
+                .ToListAsync();
+
             return View("Category", products);
         }
 
-        public async Task<IActionResult> Category2()
-        {
-            ViewBag.Category = "category2";
-            var products = await _context.Products.Where(p => p.Name.Contains("Vanille")).ToListAsync();
-            return View("Category", products);
-        }
-
-        public async Task<IActionResult> Category3()
-        {
-            ViewBag.Category = "category3";
-            var products = await _context.Products.Where(p => p.Name.Contains("Rosé")).ToListAsync();
-            return View("Category", products);
-        }
-
+        [Route("Product/Search")]
         public async Task<IActionResult> Search(string query, string filter = "name")
         {
             if (string.IsNullOrWhiteSpace(query))

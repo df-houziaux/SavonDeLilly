@@ -1,13 +1,12 @@
 ﻿<link rel="stylesheet" href="~/css/home.css">
-<script src="~/js/carousel.js"></script>
+@* <script src="~/js/carousel.js"></script> *@
 <!-- En-tête -->
 <div>
     <h1 class="fs-2">Bienvenue chez "Savon de Lilly"</h1>
     <p class="slogan">Votre destination incontournable pour des savons artisanaux faits maison.</p>
-
 </div>
 <!-- Carrousel Bootstrap sans boutons de navigation -->
-<div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel">
+<div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img src="/images/img_carrousel_1.jpg" class="d-block w-100" alt="Image 1">
@@ -52,17 +51,9 @@
 </div>
 
 <!-- Contact -->
-<section>
-    
+<section> 
     <h2 class="fw-bold">Contactez-moi</h2>
     <p class="contact-message">
         Envoyez-moi un message <a class="contact-link" asp-area="" asp-controller="Contact" asp-action="Index">ici</a> pour toute question ou commande spéciale.
     </p>
-
-
-
-
-
-
-
 </section>
