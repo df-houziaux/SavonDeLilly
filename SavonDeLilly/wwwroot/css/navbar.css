@@ -195,10 +195,10 @@ main {
     padding: 10px;
     border-radius: 8px;
     z-index: 100;
-    top: 115%; /* Placer le popup juste en dessous */
+    top: 115%;
     left: 50%;
     transform: translateX(-50%);
-    width: 300px;
+    width: 200px;
     text-align: center;
 }
 

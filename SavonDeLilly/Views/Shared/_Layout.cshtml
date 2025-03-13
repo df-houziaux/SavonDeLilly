@@ -52,7 +52,6 @@
                     </ul>
 
                 <div class="search-cart-container ms-auto">
-                    <!-- Barre de recherche avec formulaire -->
                     <form id="searchForm" action="@Url.Action("Search", "Product")" method="get" class="d-flex">
                         <input type="text" id="searchInput" name="query" class="form-control search-bar" placeholder="Rechercher un produit..." required />
                         <select id="searchFilter" name="filter" class="form-select search-filter">
@@ -63,8 +62,7 @@
                         </select>
                         <button type="submit" class="btn btn-primary">Rechercher</button>
                     </form>
-
-                    <!-- Icône du panier -->
+                    <div id="searchError" class="text-danger" style="display: none;"></div>
                     <a href="javascript:void(0);" id="cartIconLink" class="position-relative">
                         <div class="cart-icon">
                             <img src="~/images/panier.png" alt="Panier" width="50" />

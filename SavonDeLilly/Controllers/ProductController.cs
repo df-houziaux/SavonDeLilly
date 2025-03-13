@@ -19,11 +19,12 @@ namespace SavonDeLilly.Controllers
             _context = context;
         }
 
-        // Afficher tous les produits
+        // Afficher tous les produits avec Category.cshtml
         public async Task<IActionResult> Index()
         {
             var allProducts = await _context.Products.ToListAsync();
-            return View(allProducts);
+            ViewBag.Category = "Tous les produits";
+            return View("Category", allProducts); // Afficher avec Category.cshtml
         }
 
         // Afficher les produits par catégories
@@ -48,59 +49,68 @@ namespace SavonDeLilly.Controllers
             return View("Category", products);
         }
 
-        // Nouvelle méthode pour rechercher des produits
-        [HttpGet("/api/products/search")]
-        // Afficher les résultats de la recherche
-        public async Task<IActionResult> Search(string query)
+        public async Task<IActionResult> Search(string query, string filter = "name")
         {
             if (string.IsNullOrWhiteSpace(query))
             {
                 return RedirectToAction("Index");
             }
 
-            var products = await _context.Products
-                .Where(p => p.Name.Contains(query) || p.Ingredients.Contains(query))
-                .ToListAsync();
+            // Initialiser la requête de base
+            var productsQuery = _context.Products.AsQueryable();
+
+            // Appliquer les filtres en fonction des paramètres
+            switch (filter)
+            {
+                case "name":
+                    // Recherche par nom
+                    productsQuery = productsQuery.Where(p => p.Name.Contains(query));
+                    break;
+                case "ingredient":
+                    // Recherche par ingrédient
+                    productsQuery = productsQuery.Where(p => p.Ingredients.Contains(query));
+                    break;
+                case "price-asc":
+                    // Tri par prix ascendant
+                    productsQuery = productsQuery.Where(p => p.Name.Contains(query) || p.Ingredients.Contains(query))
+                                               .OrderBy(p => p.Price);
+                    break;
+                case "price-desc":
+                    // Tri par prix descendant
+                    productsQuery = productsQuery.Where(p => p.Name.Contains(query) || p.Ingredients.Contains(query))
+                                               .OrderByDescending(p => p.Price);
+                    break;
+                default:
+                    // Si aucun filtre valide n'est spécifié, rechercher par nom puis par ingrédient
+                    var productsByName = await _context.Products
+                        .Where(p => p.Name.Contains(query))
+                        .ToListAsync();
+
+                    if (!productsByName.Any())
+                    {
+                        // Si aucun produit trouvé par nom, chercher dans les ingrédients
+                        productsQuery = _context.Products.Where(p => p.Ingredients.Contains(query));
+                    }
+                    else
+                    {
+                        // Si des produits sont trouvés par nom, les utiliser
+                        return View("Category", productsByName);
+                    }
+                    break;
+            }
+
+            // Exécuter la requête finale
+            var products = await productsQuery.ToListAsync();
 
             if (!products.Any())
             {
                 TempData["SearchMessage"] = "Aucun produit trouvé.";
-                return RedirectToAction("Index");
             }
 
+            ViewBag.SearchQuery = query;
+            ViewBag.SearchFilter = filter;
+
             return View("Category", products);
-        }
-
-
-        // API pour sauvegarder le panier dans la session
-        [HttpPost("/api/cart/save")]
-        public IActionResult SaveCart([FromBody] List<CartItem> cartDetails)
-        {
-            var cartJson = JsonConvert.SerializeObject(cartDetails);
-            HttpContext.Session.SetString("CartDetails", cartJson);
-            return Ok();
-        }
-
-        // API pour récupérer les niveaux de stock
-        [HttpGet("/api/products/stock")]
-        public IActionResult GetStockLevels()
-        {
-            var stockLevels = _context.Products.Select(p => new { p.Name, p.Stock }).ToList();
-            return Ok(stockLevels);
-        }
-
-        // Afficher la page de paiement
-        public IActionResult Payment()
-        {
-            var cartItems = GetCartFromSession();
-            return View(cartItems);
-        }
-
-        // Récupérer le panier depuis la session
-        private List<CartItem> GetCartFromSession()
-        {
-            var cartJson = HttpContext.Session.GetString("CartDetails");
-            return string.IsNullOrEmpty(cartJson) ? new List<CartItem>() : JsonConvert.DeserializeObject<List<CartItem>>(cartJson);
         }
     }
 }

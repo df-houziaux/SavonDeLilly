@@ -14,14 +14,6 @@ body {
     min-height: 80vh;
     background-color: #F7F6CF;
 }
-/*
-.container {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding-bottom: 9vh;
-    margin: auto;
-}*/
 
 
 
@@ -65,6 +57,16 @@ body {
         display: block;
         animation: fadeIn 0.3s ease-in-out;
     }
+
+.stock-in {
+    color: green !important;
+    font-weight: bold;
+}
+
+.stock-out {
+    color: red !important;
+    font-weight: bold;
+}
 
 /* Animation d’apparition fluide */
 @keyframes fadeIn {
@@ -116,7 +118,7 @@ body {
     .quantity-control button {
         width: 30px;
         height: 30px;
-        background-color: #f0f0f0;
+        background-color: #20B2AA;
         border: 1px solid #ccc;
         border-radius: 3px;
         cursor: pointer;
@@ -186,7 +188,7 @@ body {
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
     .card img {
@@ -203,7 +205,12 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     max-height: 108px;
-    overflow: hidden;
+}
+
+.card-text {
+    white-space: nowrap;
+    overflow-x: clip;
+    text-overflow: ellipsis;
 }
 
 

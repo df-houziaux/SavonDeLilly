@@ -10,6 +10,7 @@ const validateOrderBtn = document.getElementById('validateOrderBtn');
 const productContainer = document.getElementById('product-container');
 const searchInput = document.getElementById('searchInput');
 const searchFilter = document.getElementById('searchFilter');
+const searchForm = document.getElementById('searchForm');
 
 // Constantes pour les catégories de produits
 const categories = {
@@ -42,7 +43,7 @@ function showCartDetails() {
         productLink.target = "_blank";
         listItem.appendChild(productLink);
 
-        // Créer un conteneur pour les boutons + et - et le champ de saisie
+        ////////// Créer un conteneur pour les boutons + et - et le champ de saisie
         const quantityContainer = document.createElement('div');
         quantityContainer.style.display = 'inline-flex';
         quantityContainer.style.alignItems = 'center';
@@ -82,7 +83,7 @@ function showCartDetails() {
             showCartDetails();
         };
 
-        // Bouton pour augmenter la quantité
+        //// Bouton pour augmenter la quantité
         const increaseBtn = document.createElement('button');
         increaseBtn.textContent = '+';
         increaseBtn.style.marginLeft = '15px';
@@ -99,7 +100,7 @@ function showCartDetails() {
         // Bouton de suppression
         const boutonSuppresionArticle = document.createElement('button');
         boutonSuppresionArticle.classList.add("btnSuppresion");
-        boutonSuppresionArticle.onclick = () => removeFromCart(cartProducts[i].name); // Added click event to remove item
+        boutonSuppresionArticle.onclick = () => removeFromCart(cartProducts[i].name);
 
         const image = document.createElement('img');
         image.src = '/images/corbeillerouge.jpg';
@@ -117,7 +118,7 @@ function showCartDetails() {
         listItem.appendChild(quantityContainer);
         cartItemsList.appendChild(listItem);
     }
-    cartDetailsContainer.classList.toggle('show', cartProducts.length > 0); // Show/hide cart details
+    cartDetailsContainer.classList.toggle('show', cartProducts.length > 0);
     updateCartTotal();
     updateProductStockDisplay();
 }
@@ -131,20 +132,24 @@ function updateProductStockDisplay() {
             const stock = parseInt(product.getAttribute('data-stock'), 10);
             const cartProduct = cartProducts.find(p => p.name === name);
             const quantityInCart = cartProduct ? cartProduct.quantity : 0;
-
-            // Affiche le stock disponible
             const stockDisplay = product.querySelector('.card-stock');
+
+            // Au lieu de remplacer tout le HTML, mise à jour du texte existant
             if (stockDisplay) {
-                if (stock <= 0) {
-                    stockDisplay.innerHTML = '<span style="color: red;">Épuisé</span>';
-                } else if (quantityInCart >= stock) {
-                    stockDisplay.innerHTML = '<span style="color: red;">Rupture de stock</span>';
-                } else {
-                    stockDisplay.innerHTML = `${stock - quantityInCart} en stock`;
+                const stockSpan = stockDisplay.querySelector('span');
+                if (stockSpan) {
+                    if (stock <= 0) {
+                        stockSpan.textContent = "Épuisé";
+                        stockSpan.className = "stock-out";
+                    } else if (quantityInCart >= stock) {
+                        stockSpan.textContent = "Rupture de stock";
+                        stockSpan.className = "stock-out";
+                    } else {
+                        stockSpan.textContent = `Stock restant : ${stock - quantityInCart}`;
+                        stockSpan.className = "stock-in";
+                    }
                 }
             }
-        } else {
-            console.warn('Un produit est indéfini dans le conteneur.');
         }
     });
 }
@@ -237,29 +242,114 @@ validateOrderBtn.addEventListener('click', () => {
     })
         .then(response => {
             if (response.ok) {
-                alert('Commande validée avec succès !');
+                alert('Commande validée !');
                 cartProducts = [];
                 saveCart();
                 showCartDetails();
-                window.location.href = '/payment'; // Redirigez vers la page de paiement
+                // Rediriger vers le paiement ou la confirmation
+                window.location.href = '/confirmation';
             } else {
-                alert('Erreur lors de la validation de la commande.');
+                alert('Erreur lors de la validation de la commande. Veuillez réessayer.');
             }
         })
-        .catch(err => console.error('Erreur lors de la requête:', err));
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
 });
 
-// Fonction de recherche
-searchInput.addEventListener('input', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-    const products = Array.from(productContainer.children);
-    products.forEach(product => {
-        const productName = product.getAttribute('data-name').toLowerCase();
-        const showProduct = productName.includes(searchTerm);
-        product.style.display = showProduct ? 'block' : 'none';
+searchForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const searchInput = document.getElementById('searchInput');
+    const searchFilter = document.getElementById('searchFilter');
+
+    if (searchInput.value.trim() !== '') {
+        localStorage.setItem('lastSearchQuery', searchInput.value);
+        localStorage.setItem('lastSearchFilter', searchFilter.value);
+
+        // Vérifiez que le localStorage est bien mis à jour avant de soumettre le formulaire
+        console.log('Mise à jour localStorage:', localStorage.getItem('lastSearchQuery'), localStorage.getItem('lastSearchFilter'));
+
+        // Soumettre le formulaire après un petit délai
+        setTimeout(() => {
+            this.submit();
+        }, 200); // Délai réduit
+    }
+});
+
+console.log(localStorage.getItem('lastSearchQuery'));
+console.log(localStorage.getItem('lastSearchFilter'));
+
+// Restaurer les derniers critères de recherche
+if (localStorage.getItem('lastSearchQuery')) {
+    searchInput.value = localStorage.getItem('lastSearchQuery');
+}
+if (localStorage.getItem('lastSearchFilter')) {
+    const lastFilter = localStorage.getItem('lastSearchFilter');
+    // S'assurer que la valeur existe dans le select
+    const optionExists = Array.from(searchFilter.options).some(option => option.value === lastFilter);
+
+    if (optionExists) {
+        searchFilter.value = lastFilter;
+    }
+}
+
+
+//Filtrer dynamiquement les produits affichés si nous sommes sur la page des résultats
+if (productContainer) {
+    searchFilter.addEventListener('change', function () {
+        localStorage.setItem('lastSearchFilter', searchFilter.value);
+        // Si nous sommes sur la page de résultats, soumettre automatiquement le formulaire
+        if (window.location.href.includes('/Product/Search')) {
+            searchForm.submit();
+        }
     });
-});
+}
 
-// Chargement initial du panier
-updateCartCount();
+////// Fonction pour valider la recherche
+////function validateSearchInput(query) {
+////    const regex = /^[a-zA-Z0-9 ]*$/; // Regex pour n'autoriser que les lettres et les chiffres
+////    return regex.test(query);
+//}
+
+
+
+
+//// Fonction pour filtrer les produits par recherche
+//function filterProducts(query) {
+//    const products = Array.from(productContainer.children);
+//    let found = false; // Variable pour vérifier si un produit a été trouvé
+
+//    products.forEach(product => {
+//        const productName = product.getAttribute('data-name').toLowerCase();
+//        if (productName.includes(query.toLowerCase())) {
+//            product.style.display = '';
+//            found = true; // Un produit correspondant a été trouvé
+//        } else {
+//            product.style.display = 'none';
+//        }
+//    });
+
+//    // Afficher ou masquer le message selon le résultat
+//    if (found) {
+//        noResultsMessage.style.display = 'none'; // Masquer le message
+//    } else {
+//        noResultsMessage.style.display = ''; // Afficher le message
+//    }
+//}
+
+//// Écouteur d'événement pour la soumission du formulaire de recherche
+//searchFilter.addEventListener('submit', function (event) {
+//    event.preventDefault();
+//    const query = searchInput.value;
+//    if (validateSearchInput(query)) {
+//        filterProducts(query);
+//    } else {
+//        alert("Recherche invalide.");
+//    }
+//});
+
+
+// Afficher les détails du panier au chargement
 showCartDetails();
+updateCartCount();
