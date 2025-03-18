@@ -5,6 +5,7 @@ namespace SavonDeLilly
 {
     public class Program
     {
+
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ namespace SavonDeLilly
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
+
             });
 
             // Add controllers and views

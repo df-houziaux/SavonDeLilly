@@ -13,7 +13,7 @@ namespace SavonDeLilly.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(RegisterViewModel model)
+        public IActionResult Register(Register model)
         {
             if (ModelState.IsValid)
             {

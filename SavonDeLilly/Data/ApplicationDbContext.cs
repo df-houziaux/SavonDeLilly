@@ -1,12 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SavonDeLilly.Models;
-
-
 
 namespace SavonDeLilly.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser> // Changement ici
     {
         // Constructeur du DbContext
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

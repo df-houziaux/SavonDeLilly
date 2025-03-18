@@ -1,0 +1,16 @@
+﻿body {
+    background-image: url('/images/Savon-mon-compte.jpg');
+    background-size: contain;
+    background-position: center 280px;
+    background-repeat: no-repeat;
+    padding-top: 20px;
+}
+
+
+.container {
+    margin-bottom: 30px;
+}
+
+.text {
+    color:lightskyblue ;
+}

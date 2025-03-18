@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Mon Compte - Connexion";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4 text">Gagnez du temps ! Connectez-vous ou inscrivez-vous en un clic</h2>
+
+    <div class="row justify-content-center">
+        <!-- Connexion -->
+        <div class="col-md-5 border p-4 shadow-sm bg-white">
+            <h3 class="mb-3 text-center">Déjà un compte ?</h3>
+
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger text-center">@ViewBag.ErrorMessage</div>
+            }
+
+            <form method="post" asp-action="Login">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required aria-required="true" />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password" required aria-required="true" />
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <input type="checkbox" id="rememberMe" />
+                        <label for="rememberMe"> Rester connecté</label>
+                    </div>
+                    <a asp-action="ForgotPassword" class="text-decoration-none">Mot de passe oublié ?</a>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 mt-3">Me connecter</button>
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success text-center mt-3">@TempData["SuccessMessage"]</div>
+                }
+            </form>
+        </div>
+
+        <!-- Inscription -->
+        <div class="col-md-5 border p-4 shadow-sm bg-light ms-md-3 mt-4 mt-md-0">
+            <h3 class="mb-3 text-center">Créer un compte</h3>
+            <p class="text-center">Créez votre compte pour vérifier la disponibilité de vos articles et passer commande rapidement !</p>
+            <a href="@Url.Action("Index", "Contact")" class="btn btn-success w-100">Créer mon compte</a>
+        </div>
+    </div>
+</div>
+
+<link href="/css/moncompte.css" rel="stylesheet" />

@@ -28,6 +28,10 @@
     object-fit: contain;
 }
 
+
+
+
+
 /* ========================== 
    BARRE DE NAVIGATION 
 ========================== */
@@ -38,6 +42,8 @@
     z-index: 1300;
     font-size: 1.3rem;
 }
+
+
 
 /* Espacement pour les éléments de la barre de navigation */
 .navbar-nav {
