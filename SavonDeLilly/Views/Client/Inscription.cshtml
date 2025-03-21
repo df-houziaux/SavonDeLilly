@@ -1,61 +1,60 @@
-﻿@model SavonDeLilly.Models.Client
+﻿@model SavonDeLilly.Models.Register
 @{
     ViewData["Title"] = "Inscription";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
 }
 
 <h2>Inscription</h2>
 
 <form asp-action="Register" method="post">
     <div class="form-group">
-        <label for="FullName" class="control-label">Nom complet</label>
-        <input asp-for="FullName" class="form-control" placeholder="Exemple : David Houziaux" />
+        <label>Nom complet</label>
+        <input asp-for="FullName" class="form-control" />
         <span asp-validation-for="FullName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label for="Email" class="control-label">Adresse e-mail</label>
-        <input asp-for="Email" class="form-control" placeholder="Exemple : nom@example.com" />
+        <label>Adresse e-mail</label>
+        <input asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label for="Password" class="control-label">Mot de passe</label>
-        <input asp-for="Password" class="form-control" type="password" id="password"
-               placeholder="Au moins 8 caractères, avec une majuscule, une minuscule, un chiffre et un caractère spécial" />
+        <label>Mot de passe</label>
+        <input asp-for="Password" class="form-control" type="password" id="password" />
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label for="ConfirmPassword" class="control-label">Confirmer le mot de passe</label>
-        <input asp-for="ConfirmPassword" class="form-control" type="password" id="confirmPassword" placeholder="Répétez le mot de passe" />
+        <label>Confirmer le mot de passe</label>
+        <input asp-for="ConfirmPassword" class="form-control" type="password" id="confirmPassword" />
         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
     </div>
 
-    <!-- Option pour afficher le mot de passe -->
     <div class="form-group">
         <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> Afficher le mot de passe
     </div>
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">S'inscrire</button>
-    </div>
+    <button type="submit" class="btn btn-primary">S'inscrire</button>
 </form>
 
 @section Scripts {
-<partial name="_ValidationScriptsPartial" />
-
-<!-- JavaScript pour basculer entre le mot de passe masqué et visible -->
-<script>
-    function togglePasswordVisibility() {
-        var passwordField = document.getElementById("password");
-        var confirmPasswordField = document.getElementById("confirmPassword");
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            confirmPasswordField.type = "text";
-        } else {
-            passwordField.type = "password";
-            confirmPasswordField.type = "password";
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function togglePasswordVisibility() {
+            var password = document.getElementById("password");
+            var confirmPassword = document.getElementById("confirmPassword");
+            password.type = password.type === "password" ? "text" : "password";
+            confirmPassword.type = confirmPassword.type === "password" ? "text" : "password";
         }
-    }
-</script>
+    </script>
 }

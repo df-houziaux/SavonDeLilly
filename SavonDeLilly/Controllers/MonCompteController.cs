@@ -1,5 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SavonDeLilly.Models; // Assurez-vous d'importer le bon espace de noms pour vos modèles
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using SavonDeLilly.Data;
+using SavonDeLilly.Models;
+using BCrypt.Net;
 using System.Net;
 using System.Net.Mail;
 
@@ -7,16 +13,46 @@ namespace SavonDeLilly.Controllers
 {
     public class MonCompteController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public MonCompteController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Login(string email, string password)
+        public async Task<IActionResult> Login(string email, string password, bool rememberMe)
         {
-            if (email == "test@savon.com" && password == "123456")
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
             {
+                ViewBag.ErrorMessage = "Veuillez entrer votre adresse e-mail et votre mot de passe.";
+                return View();
+            }
+
+            var client = _context.Clients.SingleOrDefault(c => c.Email == email);
+
+            if (client != null && BCrypt.Net.BCrypt.Verify(password, client.PasswordHash))
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, client.Email),
+                    new Claim("FullName", client.FullName),
+                    new Claim(ClaimTypes.Role, "Client")
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var authProperties = new AuthenticationProperties
+                {
+                    IsPersistent = rememberMe
+                };
+
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
                 TempData["SuccessMessage"] = "Connexion réussie !";
                 return RedirectToAction("Index", "Home");
             }
@@ -25,50 +61,87 @@ namespace SavonDeLilly.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            TempData["SuccessMessage"] = "Déconnexion réussie !";
+            return RedirectToAction("Index", "Home");
+        }
+
         public IActionResult Register()
         {
             return View();
         }
 
-        // Affichage du formulaire de mot de passe oublié
+        [HttpPost]
+        public IActionResult Register(Register model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (_context.Clients.Any(c => c.Email == model.Email))
+                {
+                    TempData["ErrorMessage"] = "Cet e-mail est déjà utilisé.";
+                    return View(model);
+                }
+
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
+
+                var client = new Client
+                {
+                    FullName = model.FullName,
+                    Email = model.Email,
+                    PasswordHash = hashedPassword
+                };
+
+                _context.Clients.Add(client);
+                _context.SaveChanges();
+
+                TempData["SuccessMessage"] = "Inscription réussie ! Connectez-vous.";
+                return RedirectToAction("Login");
+            }
+
+            TempData["ErrorMessage"] = "Erreur lors de l'inscription. Vérifiez vos informations.";
+            return View(model);
+        }
+
         public IActionResult ForgotPassword()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult ForgotPassword(string Email)
+        public IActionResult ForgotPassword(string email)
         {
-            Console.WriteLine($"Email reçu : {Email}");
-
-            if (string.IsNullOrEmpty(Email))
+            if (string.IsNullOrEmpty(email))
             {
                 ViewBag.Message = "Veuillez entrer une adresse e-mail valide.";
-                Console.WriteLine($"Message affiché : {ViewBag.Message}");
                 return View();
             }
 
-            // Générer un token
-            string token = GenerateToken(); // Génère un token unique
+            var client = _context.Clients.SingleOrDefault(c => c.Email == email);
+            if (client == null)
+            {
+                ViewBag.Message = "Adresse e-mail non trouvée.";
+                return View();
+            }
 
-            // Créer le lien de réinitialisation
-            string resetLink = Url.Action("ResetPassword", "MonCompte", new { token = token }, Request.Scheme);
+            string token = GenerateToken();
+            string resetLink = Url.Action("ResetPassword", "MonCompte", new { token = token, email = client.Email }, Request.Scheme);
 
-            // Configuration de l'envoi de l'email
             try
             {
                 MailMessage mail = new MailMessage
                 {
-                    From = new MailAddress("df.houziaux@gmail.com"), // Mon email
+                    From = new MailAddress("df.houziaux@gmail.com"),
                     Subject = "Réinitialisation de votre mot de passe",
                     Body = $"Cliquez sur ce lien pour réinitialiser votre mot de passe : <a href='{resetLink}'>Réinitialiser mon mot de passe</a>",
                     IsBodyHtml = true
                 };
-                mail.To.Add(Email);
+                mail.To.Add(email);
 
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)
                 {
-                    Credentials = new NetworkCredential("df.houziaux@gmail.com", "fnui srzh xvio ycwj"), // Mon mot de passe d'application
+                    Credentials = new NetworkCredential("df.houziaux@gmail.com", "fnui srzh xvio ycwj"),
                     EnableSsl = true
                 };
                 smtp.Send(mail);
@@ -80,24 +153,18 @@ namespace SavonDeLilly.Controllers
                 ViewBag.Message = "Erreur lors de l'envoi de l'email : " + ex.Message;
             }
 
-            Console.WriteLine($"Message affiché : {ViewBag.Message}");
             return View();
         }
 
-        // Action pour afficher le formulaire de réinitialisation
-        public IActionResult ResetPassword(string token)
+        public IActionResult ResetPassword(string token, string email)
         {
-            if (string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(email))
             {
-                ViewBag.ErrorMessage = "Le token est invalide.";
+                ViewBag.ErrorMessage = "Le token ou l'e-mail est invalide.";
                 return View("Error");
             }
 
-            var model = new ResetPassword
-            {
-                Token = token
-            };
-
+            var model = new ResetPassword { Token = token, Email = email };
             return View(model);
         }
 
@@ -106,29 +173,43 @@ namespace SavonDeLilly.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Vérifier la validité du token (ajoute ta logique ici)
-
-                // Vérifier si le mot de passe et la confirmation correspondent
+                // Vérifie si le nouveau mot de passe et la confirmation correspondent
                 if (model.Password != model.ConfirmPassword)
                 {
                     ViewBag.ErrorMessage = "Les mots de passe ne correspondent pas.";
                     return View(model);
                 }
 
-                // Logique pour mettre à jour le mot de passe dans la base de données
-                // Par exemple, trouver l'utilisateur par e-mail et mettre à jour le mot de passe
+                // Récupérer l'utilisateur à partir de l'e-mail
+                var client = _context.Clients.SingleOrDefault(c => c.Email == model.Email);
+                if (client != null)
+                {
+                    // Vérifie si le nouveau mot de passe est identique à l'ancien
+                    if (BCrypt.Net.BCrypt.Verify(model.Password, client.PasswordHash))
+                    {
+                        ViewBag.ErrorMessage = "Le nouveau mot de passe ne peut pas être le même que l'ancien mot de passe.";
+                        return View(model);
+                    }
 
-                ViewBag.Message = "Votre mot de passe a été réinitialisé avec succès.";
-                return View();
+                    // Hachage du nouveau mot de passe et mise à jour de l'utilisateur
+                    client.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password);
+                    _context.SaveChanges();
+
+                    ViewBag.Message = "Votre mot de passe a été réinitialisé avec succès.";
+                    return View();
+                }
+
+                // Message d'erreur si l'utilisateur n'est pas trouvé
+                ViewBag.ErrorMessage = "Utilisateur non trouvé.";
             }
 
-            return View(model); // Retourne le modèle avec des messages d'erreur si la validation échoue
+            // Si le modèle n'est pas valide, retourne la vue avec les messages d'erreur
+            return View(model);
         }
 
-        // Méthode pour générer un token
         private string GenerateToken()
         {
-            return Guid.NewGuid().ToString(); // Génère un token unique
+            return Guid.NewGuid().ToString();
         }
     }
 }

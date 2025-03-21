@@ -3,14 +3,19 @@
     background-size: contain;
     background-position: center 280px;
     background-repeat: no-repeat;
-    padding-top: 20px;
+    margin: -10px;
 }
 
 
 .container {
-    margin-bottom: 30px;
+    margin-bottom: 80px;
+    /* margin-bottom:60px*/
 }
 
 .text {
-    color:lightskyblue ;
+    color: lightskyblue;
+}
+
+.footer {
+    height: 125px;
 }

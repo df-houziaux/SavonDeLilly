@@ -1,10 +1,24 @@
 ﻿<link rel="stylesheet" href="~/css/home.css">
-@* <script src="~/js/carousel.js"></script> *@
+
 <!-- En-tête -->
 <div>
     <h1 class="fs-2">Bienvenue chez "Savon de Lilly"</h1>
     <p class="slogan">Votre destination incontournable pour des savons artisanaux faits maison.</p>
 </div>
+
+<!-- Affichage des messages de succès et d'erreur -->
+<div class="container mt-3">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success text-center">@TempData["SuccessMessage"]</div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger text-center">@TempData["ErrorMessage"]</div>
+    }
+</div>
+
 <!-- Carrousel Bootstrap sans boutons de navigation -->
 <div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-inner">
@@ -19,12 +33,14 @@
         </div>
     </div>
 </div>
+
 <!-- Séparateur élégant -->
 <div style="text-align: center; margin-bottom: 10px; width: 100%;">
     <hr style="border-top: 2px solid #333; margin: 10px auto; width: 30%;">
     <h2 class="fs-3">Explorez Mes Offres</h2>
     <hr style="border-top: 2px solid #333; margin: 10px 10px; width: 30%;">
 </div>
+
 <!-- Pourquoi Choisir -->
 <section>
     <h2 class="fw-bold">Pourquoi Choisir Mes Savons ?</h2>
@@ -34,6 +50,7 @@
         <li><strong>Artisanal :</strong> Chaque savon est fait à la main avec passion.</li>
     </ul>
 </section>
+
 <!-- Produits -->
 <section>
     <h2 class="fw-bold">Mes Produits</h2>
@@ -42,6 +59,7 @@
         <li><strong>Savons Exfoliants :</strong> Pour une peau propre et éclatante.</li>
     </ul>
 </section>
+
 <!-- Témoignages -->
 <div class="testimonial">
     <p class="testimonial-text">
@@ -51,7 +69,7 @@
 </div>
 
 <!-- Contact -->
-<section> 
+<section>
     <h2 class="fw-bold">Contactez-moi</h2>
     <p class="contact-message">
         Envoyez-moi un message <a class="contact-link" asp-area="" asp-controller="Contact" asp-action="Index">ici</a> pour toute question ou commande spéciale.

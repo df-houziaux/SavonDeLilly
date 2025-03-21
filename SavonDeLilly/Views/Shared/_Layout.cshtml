@@ -16,13 +16,12 @@
 </head>
 <body>
     <div class="logo-container">
-    <a asp-area="" asp-controller="Home" asp-action="Index">
-        <img src="@Url.Content("~/images/Logo.png")" alt="Les Savons de Lily" class="logo-img">
-    </a>
+        <a asp-area="" asp-controller="Home" asp-action="Index">
+            <img src="@Url.Content("~/images/Logo.png")" alt="Les Savons de Lily" class="logo-img">
+        </a>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-        <!-- Ajout de sticky-top ici -->
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -72,11 +71,15 @@
                             <span id="cartCount" class="cart-count badge bg-danger position-absolute top-0 start-100 translate-middle">0</span>
                         </div>
                     </a>
+
+                    <!-- Formulaire de déconnexion -->
+                    <form asp-action="Logout" asp-controller="MonCompte" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger">Déconnexion</button>
+                    </form>
                 </div>
             </div>
         </div>
     </nav>
-   
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -111,7 +114,6 @@
                         <a href="https://github.com/df-houziaux" target="_blank" class="social-icon github">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub">
                         </a>
-
                     </div>
                     <div class="contact-button">
                         <a href="@Url.Action("Contact", "Home")" class="btn-contact">Me Contacter</a>
