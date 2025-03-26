@@ -1,59 +1,55 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SavonDeLilly.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ProjetValilou.Controllers
 {
     public class PaymentController : Controller
     {
-        // Afficher la page de paiement
         public IActionResult Payment()
         {
-            // Récupérer les détails du panier depuis la session
             var cartDetailsJson = HttpContext.Session.GetString("CartDetails");
             var cartItems = string.IsNullOrEmpty(cartDetailsJson)
                 ? new List<CartItem>()
                 : JsonConvert.DeserializeObject<List<CartItem>>(cartDetailsJson);
 
-            // Si le panier est vide, rediriger vers la page des produits
             if (cartItems == null || cartItems.Count == 0)
-            {
                 return RedirectToAction("Index", "Home");
-            }
 
-            // Calculer le total du panier de manière sécurisée
-            ViewBag.CartTotal = cartItems
-                .Where(item => item != null && item.Product != null)
-                .Sum(item => item.Quantity * item.Product.Price);
-
-            return View("Payment", cartItems);  // Assurez-vous que le nom de la vue est "Payment"
+            ViewBag.CartTotal = cartItems.Sum(item => item.Quantity * item.Product.Price);
+            return View("Payment", cartItems);
         }
 
-        // Traiter le paiement
         [HttpPost]
-        public IActionResult ProcessPayment(PaymentInfo paymentInfo)
+        public IActionResult ProcessPayment(string method)
         {
-            if (ModelState.IsValid)
+            if (method == "cash")
             {
-                // Logique pour traiter le paiement (intégration d'une API de paiement)
-                // Envoi à un service de paiement (comme Stripe ou PayPal)
-
-                // Suppression des informations du panier après le paiement
                 HttpContext.Session.Remove("CartDetails");
-
-                // Redirection vers la page de confirmation
                 return RedirectToAction("Confirmation");
             }
-
-            // Si le modèle n'est pas valide, retourner la vue "Payment" avec les erreurs
-            return View("Payement");  // Retourner explicitement la vue "Payment"
+            else if (method == "paypal")
+            {
+                return RedirectToAction("PayWithPayPal");
+            }
+            return RedirectToAction("Payment");
         }
 
-        // Page de confirmation
+        public IActionResult PayWithPayPal()
+        {
+            var total = HttpContext.Session.GetString("CartTotal");
+            string paypalUrl = $"https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=sb-afnwc39290877@personal.example.com&item_name=Commande&amount={total}&currency_code=EUR&return={Url.Action("Confirmation", "Payment", null, Request.Scheme)}&cancel_return={Url.Action("Payment", "Payment", null, Request.Scheme)}";
+
+            return Redirect(paypalUrl);
+        }
+
+
         public IActionResult Confirmation()
         {
-            ViewBag.Message = "Votre paiement a été traité avec succès et votre commande est en cours de traitement.";
-            return View();  // Retourne la vue Confirmation.cshtml
+            ViewBag.Message = "Votre paiement a été validé.";
+            return View();
         }
     }
 }

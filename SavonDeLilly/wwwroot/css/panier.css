@@ -1,0 +1,71 @@
+﻿/* panier.css */
+
+
+
+
+/* Style pour le tableau du panier */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+    .cart-table th, .cart-table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .cart-table th {
+        background-color: #f2f2f2;
+    }
+
+    .cart-table .remove-btn {
+        background: none;
+        border: none;
+        color: red;
+        cursor: pointer;
+    }
+
+/* Style pour le total */
+.total {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+}
+
+/* Style pour le lien "Continuer mes achats" */
+.continue-shopping-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 15px;
+    background-color: #b6d8f2;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+    .continue-shopping-btn:hover {
+        background-color: #f8e0c8;
+    }
+
+/* Style pour les boutons */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .btn:hover {
+        background-color: #f8e0c8;
+    }

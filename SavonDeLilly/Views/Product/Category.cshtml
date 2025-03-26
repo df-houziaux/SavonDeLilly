@@ -14,6 +14,15 @@
 }
 
 <div class="category-container">
+    <div class="header">
+        <h1 class="category-title">Catalogue de Savons</h1>
+        <div id="cart-message" class="cart-message" style="display: none;"></div>
+        <a href="/Panier" class="cart-link">
+            <i class="fas fa-shopping-cart cart-icon"></i>
+            Voir mon panier
+        </a>
+    </div>
+
     @if (ViewBag.SearchQuery != null)
     {
         <h1 class="category-title">Résultats pour '@ViewBag.SearchQuery'</h1>
@@ -23,10 +32,6 @@
         ViewBag.SearchFilter == "price-asc" ? "Prix (croissant)" :
         ViewBag.SearchFilter == "price-desc" ? "Prix (décroissant)" : "Tous")
         </p>
-    }
-    else
-    {
-        <h1 class="category-title">Catalogue de Savons</h1>
     }
 
     @if (TempData["SearchMessage"] != null)
@@ -40,7 +45,6 @@
             <div class="flip-card"
                  data-name="@product.Name"
                  data-price="@product.Price"
-                 data-ingredient="@product.Ingredients"
                  data-stock="@product.Stock">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
@@ -74,18 +78,6 @@
             </div>
         }
     </div>
-</div>
-
-<!-- Conteneur des détails du panier -->
-<div class="cart-details-container" id="cartDetailsContainer">
-    <button class="close-cart-btn" id="closeCartBtn">&times;</button>
-    <h3>Détails du Panier</h3>
-    <ul id="cartItemsList"></ul>
-    <div id="cartTotalContainer">
-        <span>Total : </span><span id="cartTotal">0.00 €</span>
-    </div>
-    <button id="clearCartBtn" class="clear-cart-btn">Vider le Panier</button>
-    <button id="validateOrderBtn" class="cart-action-btn">Valider la commande</button>
 </div>
 
 <link rel="stylesheet" href="~/css/styles.css" />
