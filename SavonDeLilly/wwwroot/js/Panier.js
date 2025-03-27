@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         cartTableBody.innerHTML = '';
         let total = 0;
 
-        if (cartProducts.length === 0) {
+        if (!cartProducts || cartProducts.length === 0) {
             cartTableBody.innerHTML = '<tr><td colspan="5">Votre panier est vide.</td></tr>';
             cartTotalElement.textContent = "0.00 €";
             return;
@@ -113,6 +113,11 @@ document.addEventListener("DOMContentLoaded", function () {
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
                     alert('Paiement réussi par ' + details.payer.name.given_name);
+
+                    // 🛒 Vider le panier en localStorage
+                    localStorage.removeItem('cartProducts');
+
+                    // 🔄 Recharger la page pour afficher un panier vide
                     window.location.href = "/Payment/Confirmation";
                 });
             },
@@ -122,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }).render('#paypal-button-container');
     }
+
 
     loadCart();
 });

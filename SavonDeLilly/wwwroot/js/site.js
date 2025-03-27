@@ -1,13 +1,5 @@
 ﻿"use strict";
 
-if (typeof searchForm === "undefined") {
-    const searchForm = document.getElementById('searchForm');
-}
-
-if (typeof productContainer === "undefined") {
-    const productContainer = document.getElementById('product-container');
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     // Gestion de la popup des produits
     let produitsButton = document.getElementById("produitsButton");
@@ -30,14 +22,25 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("produitsButton ou produitsPopup non trouvé !");
     }
 
+    // 🛒 Vérifie si on est sur la page de confirmation
+    if (window.location.pathname.includes("/Payment/Confirmation")) {
+        console.log("🔄 Suppression du panier après paiement...");
+        localStorage.removeItem("cartProducts");
+    }
+
     // Récupérer le nombre d'articles dans le panier
     recupereNombreArticlesPanier();
 });
 
+// 🛒 Fonction pour mettre à jour le nombre d'articles dans le panier
 function recupereNombreArticlesPanier() {
     const panier = JSON.parse(localStorage.getItem("cartProducts")) || [];
-    const nombreArticle = panier.reduce((sum, product) => sum + product.quantity, 0)
-    const cardCount = document.getElementById("cartCount");
+    const nombreArticle = panier.reduce((sum, product) => sum + product.quantity, 0);
+    const cartCount = document.getElementById("cartCount");
 
-    cardCount ? cardCount.innerText = nombreArticle : console.error("Element avec ID 'cartCount' non trouvé !");
+    if (cartCount) {
+        cartCount.innerText = nombreArticle;
+    } else {
+        console.error("❌ Élément avec ID 'cartCount' non trouvé !");
+    }
 }
