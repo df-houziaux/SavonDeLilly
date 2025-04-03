@@ -1,0 +1,99 @@
+﻿@model IEnumerable<SavonDeLilly.Models.Product>
+@{
+    ViewBag.Title = "Gestion des Produits";
+}
+
+<h1 class="text-center my-4">Gestion des Produits</h1>
+
+<!-- Formulaire d'ajout/modification -->
+<div class="container">
+    <form id="productForm" method="post" enctype="multipart/form-data">
+        <input type="hidden" id="ProductId" name="Id" />
+
+        <div class="mb-3">
+            <label class="form-label">Nom du Produit</label>
+            <input type="text" id="ProductName" name="Name" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Prix (€)</label>
+            <input type="number" id="ProductPrice" name="Price" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Catégorie</label>
+            <input type="text" id="ProductCategory" name="Category" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea id="ProductDescription" name="Description" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Image</label>
+            <input type="file" id="ProductImage" name="image" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="button" class="btn btn-secondary" onclick="resetForm()">Annuler</button>
+    </form>
+</div>
+
+<!-- Tableau des produits -->
+<div class="container mt-4">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Catégorie</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price €</td>
+                    <td>@product.Category</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(product.ImageUrl))
+                        {
+                            <img src="/images/@product.ImageUrl" width="50" />
+                        }
+                    </td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editProduct(@product.Id, '@product.Name', @product.Price, '@product.Category', '@product.Description')">Modifier</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteProduct(@product.Id)">Supprimer</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- JavaScript pour gérer les actions -->
+<script>
+    function editProduct(id, name, price, category, description) {
+        document.getElementById("ProductId").value = id;
+        document.getElementById("ProductName").value = name;
+        document.getElementById("ProductPrice").value = price;
+        document.getElementById("ProductCategory").value = category;
+        document.getElementById("ProductDescription").value = description;
+    }
+
+    function resetForm() {
+        document.getElementById("productForm").reset();
+        document.getElementById("ProductId").value = "";
+    }
+
+    function deleteProduct(id) {
+        if (confirm("Voulez-vous vraiment supprimer ce produit ?")) {
+            fetch(`/Admin/DeleteProduct/${id}`, { method: 'POST' })
+                .then(response => location.reload());
+        }
+    }
+</script>

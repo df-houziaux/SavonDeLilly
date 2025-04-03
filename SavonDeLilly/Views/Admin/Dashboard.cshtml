@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Tableau de bord";
+}
+
+<h2 class="text-center">Tableau de Bord Admin</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+<p><strong>Nombre total de clients :</strong> @ViewBag.ClientCount</p>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var client in Model)
+        {
+            <tr>
+                <td>@client.Id</td>
+                <td>@client.FullName</td>
+                <td>@client.Email</td>
+                <td>
+                    <form method="post" asp-action="DeleteClient" asp-controller="Admin">
+                        <input type="hidden" name="id" value="@client.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

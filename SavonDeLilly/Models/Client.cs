@@ -14,6 +14,8 @@ namespace SavonDeLilly.Models
         public string Email { get; set; }
 
         [Required]
-        public string PasswordHash { get; set; } // 🔒 On stocke un mot de passe haché
+        public string PasswordHash { get; set; }
+
+        public string Role { get; set; }
     }
 }

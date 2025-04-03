@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
@@ -42,7 +41,7 @@ namespace SavonDeLilly.Controllers
                 {
                     new Claim(ClaimTypes.Name, client.Email),
                     new Claim("FullName", client.FullName),
-                    new Claim(ClaimTypes.Role, "Client")
+                    new Claim(ClaimTypes.Role, client.Role) // Utiliser le rôle de l'utilisateur
                 };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -78,25 +77,30 @@ namespace SavonDeLilly.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Vérifie si l'e-mail est déjà utilisé
                 if (_context.Clients.Any(c => c.Email == model.Email))
                 {
                     TempData["ErrorMessage"] = "Cet e-mail est déjà utilisé.";
                     return View(model);
                 }
 
+                // Hachage du mot de passe
                 string hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.Password);
 
+                // Créer un nouveau client
                 var client = new Client
                 {
                     FullName = model.FullName,
                     Email = model.Email,
-                    PasswordHash = hashedPassword
+                    PasswordHash = hashedPassword,
+                    Role = "Client" // Assigner le rôle par défaut
                 };
 
+                // Ajoute le client à la base de données
                 _context.Clients.Add(client);
                 _context.SaveChanges();
 
-                TempData["SuccessMessage"] = "Inscription réussie ! Connectez-vous.";
+                TempData["Message"] = "Inscription réussie ! Connectez-vous.";
                 return RedirectToAction("Login");
             }
 
@@ -210,6 +214,49 @@ namespace SavonDeLilly.Controllers
         private string GenerateToken()
         {
             return Guid.NewGuid().ToString();
+        }
+
+        // Méthode pour créer un administrateur
+        public IActionResult CreateAdmin()
+        {
+            // Vérifie si l'administrateur existe déjà
+            if (_context.Clients.Any(c => c.Email == "admin@example.com"))
+            {
+                TempData["ErrorMessage"] = "L'administrateur existe déjà.";
+                return RedirectToAction("Index", "Home"); // Redirige vers la page d'accueil
+            }
+
+            // Créer un nouvel utilisateur administrateur
+            var admin = new Client
+            {
+                FullName = "Admin User",
+                Email = "admin@example.com",
+                PasswordHash = BCrypt.Net.BCrypt.HashPassword("AdminPassword123"), // Hachage du mot de passe
+                Role = "Admin" // Définir le rôle sur Admin
+            };
+
+            // Ajoute l'administrateur à la base de données
+            _context.Clients.Add(admin);
+
+            // Enregistrez les changements et vérifiez le succès
+            try
+            {
+                _context.SaveChanges();
+                TempData["Message"] = "Administrateur créé avec succès !";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "Erreur lors de la création de l'administrateur : " + ex.Message;
+            }
+
+            return RedirectToAction("Index", "Home"); // Redirige vers la page d'accueil
+        }
+
+        // Méthode pour initialiser l'administrateur
+        [HttpGet]
+        public IActionResult InitAdmin()
+        {
+            return CreateAdmin();
         }
     }
 }
